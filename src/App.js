@@ -20,12 +20,16 @@ import UserEvents from "./pages/UserEvents.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
+
 
 class App extends Component {
     render() {
         return (
             <React.Fragment>
                 <Router>
+                    <Header />
                     <Switch>
                         <Route exact path="/" component={Authentication}/>
                         <Route exact path="/login" component={Login}/>
@@ -39,6 +43,7 @@ class App extends Component {
                         <Route exact path="/404" component={NotFoundPage} />
                         <Redirect to="/404" />
                     </Switch>
+                    <Footer />
                 </Router>
             </React.Fragment>
         );
