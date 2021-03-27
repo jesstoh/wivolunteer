@@ -2,7 +2,6 @@
 
 WiVolunteer App - Front End
 
-## Collaborator
-
-Jess Toh
-Tee Wenjie
+## Collaborators
+- Jess Toh
+- Tee Wenjie
