@@ -24,6 +24,7 @@ import NotFoundPage from "./pages/NotFoundPage.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import PublicRoute from "./components/PublicRoute.jsx";
 
 class App extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class App extends Component {
         this.state = {
             isAuthenticated: false,
             token: "",
-            user: "ab",
+            user: "",
         };
     }
 
@@ -65,9 +66,9 @@ class App extends Component {
                 <Router>
                     <Header />
                     <Switch>
-                        <Route exact path="/" component={Authentication} />
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/register" component={Register} />
+                        <PublicRoute exact path="/" isAuthenticated={this.state.isAuthenticated} component={Authentication} />
+                        <PublicRoute exact path="/login" isAuthenticated={this.state.isAuthenticated} component={Login} />
+                        <PublicRoute exact path="/register" isAuthenticated={this.state.isAuthenticated} component={Register} />
                         <ProtectedRoute exact path="/home" isAuthenticated={this.state.isAuthenticated} component={HomePage} />
                         <ProtectedRoute exact path="/event" isAuthenticated={this.state.isAuthenticated} component={Event} />
                         <ProtectedRoute exact path="/event/form" isAuthenticated={this.state.isAuthenticated} component={EventForm} />
