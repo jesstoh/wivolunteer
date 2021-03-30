@@ -23,6 +23,7 @@ import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 class App extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class App extends Component {
         this.state = {
             isAuthenticated: false,
             token: "",
-            user: null,
+            user: "ab",
         };
     }
 
@@ -67,20 +68,12 @@ class App extends Component {
                         <Route exact path="/" component={Authentication} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
-                        <Route exact path="/home" component={HomePage} />
-                        <Route exact path="/event" component={Event} />
-                        <Route exact path="/event/form" component={EventForm} />
-                        <Route exact path="/profile" component={UserProfile} />
-                        <Route
-                            exact
-                            path="/user/events"
-                            component={UserEvents}
-                        />
-                        <Route
-                            exact
-                            path="/feedback"
-                            component={EventFeedback}
-                        />
+                        <ProtectedRoute exact path="/home" isAuthenticated={this.state.isAuthenticated} component={HomePage} />
+                        <ProtectedRoute exact path="/event" isAuthenticated={this.state.isAuthenticated} component={Event} />
+                        <ProtectedRoute exact path="/event/form" isAuthenticated={this.state.isAuthenticated} component={EventForm} />
+                        <ProtectedRoute exact path="/profile" isAuthenticated={this.state.isAuthenticated} component={UserProfile} />
+                        <ProtectedRoute exact path="/user/events" isAuthenticated={this.state.isAuthenticated} component={UserEvents} />
+                        <ProtectedRoute exact path="/feedback" isAuthenticated={this.state.isAuthenticated} component={EventFeedback} />
                         <Route exact path="/404" component={NotFoundPage} />
                         <Redirect to="/404" />
                     </Switch>
