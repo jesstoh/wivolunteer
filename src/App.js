@@ -22,7 +22,7 @@ import UserProfile from "./pages/UserProfile.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 import Header from "./components/Header.jsx";
-import HeaderPublic from "./components/HeaderPublic.jsx"
+import HeaderPublic from "./components/HeaderPublic.jsx";
 import Footer from "./components/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
@@ -36,6 +36,7 @@ class App extends Component {
             user: null,
         };
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     // Check if user is login when page load
@@ -68,70 +69,89 @@ class App extends Component {
         this.setState({ isAuthenticated: false, token: "", user: null });
     }
 
+    handleLogin(token, user) {
+        localStorage.setItem("token", token);
+        this.setState({ isAuthenticated: true, token: token, user: user });
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Router>
-                    {this.state.isAuthenticated ? <Header user={this.state.user} handleLogout={this.handleLogout}/> : <HeaderPublic />}
+                    {this.state.isAuthenticated ? (
+                        <Header
+                            user={this.state.user}
+                            handleLogout={this.handleLogout}
+                        />
+                    ) : (
+                        <HeaderPublic />
+                    )}
                     <main>
-                    <Switch>
-                        <PublicRoute
-                            exact
-                            path="/"
-                            isAuthenticated={this.state.isAuthenticated}
-                            component={Authentication}
-                        />
-                        <PublicRoute
-                            exact
-                            path="/login"
-                            isAuthenticated={this.state.isAuthenticated}
-                            component={Login}
-                        />
-                        <PublicRoute
-                            exact
-                            path="/register"
-                            isAuthenticated={this.state.isAuthenticated}
-                            component={Register}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/home"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={HomePage}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/event/:id"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={Event}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/event/form"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={EventForm}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/profile"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={UserProfile}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/user/events"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={UserEvents}
-                        />
-                        <ProtectedRoute
-                            exact
-                            path="/feedback/:id"
-                            isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
-                            component={EventFeedback}
-                        />
-                        <Route exact path="/404" component={NotFoundPage} />
-                        <Redirect to="/404" />
-                    </Switch>
+                        <Switch>
+                            <PublicRoute
+                                exact
+                                path="/"
+                                isAuthenticated={this.state.isAuthenticated}
+                                component={Authentication}
+                            />
+                            <PublicRoute
+                                exact
+                                path="/login"
+                                isAuthenticated={this.state.isAuthenticated}
+                                component={Login}
+                                handleLogin={this.handleLogin}
+                            />
+                            <PublicRoute
+                                exact
+                                path="/register"
+                                isAuthenticated={this.state.isAuthenticated}
+                                component={Register}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/home"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={HomePage}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/event/:id"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={Event}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/event/form"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={EventForm}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/profile"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={UserProfile}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/user/events"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={UserEvents}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/feedback/:id"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={EventFeedback}
+                            />
+                            <Route exact path="/404" component={NotFoundPage} />
+                            <Redirect to="/404" />
+                        </Switch>
                     </main>
                     <Footer />
                 </Router>
