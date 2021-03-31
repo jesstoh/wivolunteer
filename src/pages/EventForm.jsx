@@ -1,47 +1,32 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import FormInput from '../components/FormInput.jsx';
 class EventForm extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			eventTitle: '',
-			dateTime: '',
-		};
-	}
 	render() {
 		return (
 			<React.Fragment>
 				<MDBContainer className='mt-5'>
 					<form>
 						<p className='h4 text-center mb-4'>Create an Event</p>
-						<label htmlFor='eventTitle'>Event Title:</label>
-						<input
-							type='text'
-							className='form-control'
-							id='eventTitle'
-							placeholder='My Event'
-							required
+						<FormInput
+							type={'text'}
+							id={'eventTitle'}
+							labelTitle={'Event Title'}
 						/>
 						<br />
 						<MDBRow>
 							<MDBCol size='6'>
-								<label htmlFor='dateTime'>Date/Time:</label>
-								<input
-									type='datetime-local'
-									className='form-control'
-									id='dateTime'
-									required
+								<FormInput
+									type={'datetime-local'}
+									id={'dateTime'}
+									labelTitle={'Date/Time:'}
 								/>
 							</MDBCol>
 							<MDBCol size='6'>
-								<label htmlFor='dateTime'>Participants Limit:</label>
-								<input
-									type='number'
-									className='form-control'
-									id='limit'
-									min='1'
-									placeholder='1'
-									required
+								<FormInput
+									type={'number'}
+									id={'limit'}
+									labelTitle={'Participants Limit:'}
 								/>
 							</MDBCol>
 						</MDBRow>
@@ -49,12 +34,18 @@ class EventForm extends Component {
 						<br />
 						<MDBRow>
 							<MDBCol size='6'>
-								<label htmlFor='location'>Location:</label>
-								<input type='text' className='form-control' id='location' />
+								<FormInput
+									type={'text'}
+									id={'location'}
+									labelTitle={'Location:'}
+								/>
 							</MDBCol>
 							<MDBCol size='6'>
-								<label htmlFor='zipCode'>Postal Code:</label>
-								<input type='text' className='form-control' id='zipCode' />
+								<FormInput
+									type={'text'}
+									id={'zipCode'}
+									labelTitle={'Postal Code:'}
+								/>
 							</MDBCol>
 						</MDBRow>
 
