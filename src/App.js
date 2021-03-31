@@ -22,6 +22,7 @@ import UserProfile from "./pages/UserProfile.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 import Header from "./components/Header.jsx";
+import HeaderPublic from "./components/HeaderPublic.jsx"
 import Footer from "./components/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
@@ -71,7 +72,8 @@ class App extends Component {
         return (
             <React.Fragment>
                 <Router>
-                    <Header />
+                    {this.state.isAuthenticated ? <Header user={this.state.user} handleLogout={this.handleLogout}/> : <HeaderPublic />}
+                    <main>
                     <Switch>
                         <PublicRoute
                             exact
@@ -130,6 +132,7 @@ class App extends Component {
                         <Route exact path="/404" component={NotFoundPage} />
                         <Redirect to="/404" />
                     </Switch>
+                    </main>
                     <Footer />
                 </Router>
             </React.Fragment>
