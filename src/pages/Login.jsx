@@ -31,14 +31,19 @@ class Login extends Component {
                 password: this.state.password,
             })
             .then((response) => {
-                console.log(response.data);
-                this.setState({ errorMessage: "" }); // Clear error message
+                this.setState({ errorMessage: "" });
+                this.props.handleLogin(
+                    response.data.jwtToken,
+                    response.data.user
+                );
+                 // Clear error message
             })
             .catch((err) => {
-                this.setState({ errorMessage: err.response.data.error }); // Set error message to display
-            })
-            .then(() => {
-                this.setState({ email: "", password: "" }); // Clear the form
+                this.setState({
+                    errorMessage: err.response.data.error,
+                    email: "",
+                    password: "",
+                }); // Set error message to display
             });
     }
 
@@ -76,15 +81,18 @@ class Login extends Component {
                                             value={this.state.password}
                                             id="password"
                                             onChange={this.handleChange}
-                                            required minlength="8"
+                                            required
+                                            minLength="6"
                                         />
                                     </div>
-                                    <p className="red-text">{this.state.errorMessage}</p>
+                                    <p className="red-text">
+                                        {this.state.errorMessage}
+                                    </p>
                                     <div className="text-center">
                                         <MDBBtn type="submit">Login</MDBBtn>
                                     </div>
                                 </form>
-                                
+
                                 <p className="text-right pt-4">
                                     Not a member yet?{" "}
                                     <Link to="/register">Sign Up Now</Link>
