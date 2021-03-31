@@ -64,7 +64,10 @@ class EventForm extends Component {
 						<br />
 
 						{/* Event type as checkbox or dropdown menu? */}
-						<div>
+
+						<FormInput type={'text'} id={'image'} labelTitle={'Image:'} />
+
+						{/* <div>
 							<label htmlFor='image' className='grey-text'>
 								Image
 							</label>
@@ -79,7 +82,7 @@ class EventForm extends Component {
 									Select Image
 								</label>
 							</div>
-						</div>
+						</div> */}
 
 						<div className='text-center mt-4'>
 							<MDBBtn color='blue' outline type='submit'>
