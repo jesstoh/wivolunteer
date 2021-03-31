@@ -36,6 +36,7 @@ class App extends Component {
             user: null,
         };
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     // Check if user is login when page load
@@ -68,6 +69,11 @@ class App extends Component {
         this.setState({ isAuthenticated: false, token: "", user: null });
     }
 
+    handleLogin(token, user) {
+        localStorage.setItem("token", token);
+        this.setState({ isAuthenticated: true, token: token, user: user });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -91,7 +97,7 @@ class App extends Component {
                             exact
                             path="/register"
                             isAuthenticated={this.state.isAuthenticated}
-                            component={Register}
+                            component={Register} handleLogin={this.handleLogin}
                         />
                         <ProtectedRoute
                             exact
