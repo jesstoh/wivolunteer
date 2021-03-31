@@ -9,11 +9,37 @@ import {
     MDBCardBody,
 } from "mdbreact";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = { email: "", password: "", errorMessage: "" };
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ [event.target.id]: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/login`, {
+                email: this.state.email,
+                password: this.state.password,
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.setState({ errorMessage: "" }); // Clear error message
+            })
+            .catch((err) => {
+                this.setState({ errorMessage: err.response.data.error }); // Set error message to display
+            })
+            .then(() => {
+                this.setState({ email: "", password: "" }); // Clear the form
+            });
     }
 
     render() {
@@ -23,7 +49,7 @@ class Login extends Component {
                     <MDBCol md="6 offset-3">
                         <MDBCard>
                             <MDBCardBody>
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <p className="h5 text-center mb-4">
                                         Sign in
                                     </p>
@@ -36,6 +62,10 @@ class Login extends Component {
                                             validate
                                             error="wrong"
                                             success="right"
+                                            value={this.state.email}
+                                            id="email"
+                                            onChange={this.handleChange}
+                                            required
                                         />
                                         <MDBInput
                                             label="Type your password"
@@ -43,12 +73,18 @@ class Login extends Component {
                                             group
                                             type="password"
                                             validate
+                                            value={this.state.password}
+                                            id="password"
+                                            onChange={this.handleChange}
+                                            required minlength="8"
                                         />
                                     </div>
+                                    <p className="red-text">{this.state.errorMessage}</p>
                                     <div className="text-center">
-                                        <MDBBtn>Login</MDBBtn>
+                                        <MDBBtn type="submit">Login</MDBBtn>
                                     </div>
                                 </form>
+                                
                                 <p className="text-right pt-4">
                                     Not a member yet?{" "}
                                     <Link to="/register">Sign Up Now</Link>
