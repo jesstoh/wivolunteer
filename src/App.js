@@ -99,7 +99,7 @@ class App extends Component {
                         />
                         <ProtectedRoute
                             exact
-                            path="/event"
+                            path="/event/:id"
                             isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
                             component={Event}
                         />
@@ -123,7 +123,7 @@ class App extends Component {
                         />
                         <ProtectedRoute
                             exact
-                            path="/feedback"
+                            path="/feedback/:id"
                             isAuthenticated={this.state.isAuthenticated} handleLogout={this.handleLogout}
                             component={EventFeedback}
                         />
