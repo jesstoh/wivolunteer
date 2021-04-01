@@ -31,7 +31,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuthenticated: false,
+            isAuthenticated: null,
             token: "",
             user: null,
         };
@@ -60,6 +60,8 @@ class App extends Component {
                 .catch((err) => {
                     localStorage.removeItem("token"); // remove invalid token
                 });
+        } else {
+            this.setState({ isAuthenticated: false });
         }
     }
 
@@ -75,7 +77,7 @@ class App extends Component {
     }
 
     render() {
-        return (
+        return this.state.isAuthenticated === null ? null : (
             <React.Fragment>
                 <Router>
                     {this.state.isAuthenticated ? (
@@ -117,17 +119,17 @@ class App extends Component {
                             />
                             <ProtectedRoute
                                 exact
-                                path="/event/:id"
-                                isAuthenticated={this.state.isAuthenticated}
-                                handleLogout={this.handleLogout}
-                                component={Event}
-                            />
-                            <ProtectedRoute
-                                exact
                                 path="/event/form"
                                 isAuthenticated={this.state.isAuthenticated}
                                 handleLogout={this.handleLogout}
                                 component={EventForm}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/event/:id"
+                                isAuthenticated={this.state.isAuthenticated}
+                                handleLogout={this.handleLogout}
+                                component={Event}
                             />
                             <ProtectedRoute
                                 exact
