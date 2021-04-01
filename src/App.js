@@ -31,7 +31,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAuthenticated: false,
+			isAuthenticated: true,
 			token: '',
 			user: '',
 		};
@@ -112,13 +112,7 @@ class App extends Component {
 								handleLogout={this.handleLogout}
 								component={HomePage}
 							/>
-							<ProtectedRoute
-								exact
-								path='/event/:id'
-								isAuthenticated={this.state.isAuthenticated}
-								handleLogout={this.handleLogout}
-								component={Event}
-							/>
+
 							<ProtectedRoute
 								exact
 								path='/event/form'
@@ -126,6 +120,15 @@ class App extends Component {
 								handleLogout={this.handleLogout}
 								component={EventForm}
 							/>
+
+							<ProtectedRoute
+								exact
+								path='/event/:id'
+								isAuthenticated={this.state.isAuthenticated}
+								handleLogout={this.handleLogout}
+								component={Event}
+							/>
+
 							<ProtectedRoute
 								exact
 								path='/profile'

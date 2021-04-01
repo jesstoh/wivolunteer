@@ -1,50 +1,113 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
-import FormInput from '../components/FormInput.jsx';
+import axios from 'axios';
+
 class EventForm extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			eventTitle: '',
+			dateTime: '',
+			limit: 1,
+			location: '',
+			zipCode: '',
+			description: '',
+			image: '',
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleChange(event) {
+		this.setState({ [event.target.id]: event.target.value });
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+		const data = this.state;
+		const token = localStorage.getItem('token');
+
+		axios
+			.post(`${process.env.REACT_APP_API_URL}/events`, data, {
+				headers: { authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((err) => {
+				console.log(err.message);
+			});
+	}
+
 	render() {
 		return (
 			<React.Fragment>
 				<MDBContainer className='mt-5'>
-					<form>
+					<form onSubmit={this.handleSubmit}>
 						<p className='h4 text-center mb-4'>Create an Event</p>
-						<FormInput
-							type={'text'}
-							id={'eventTitle'}
-							labelTitle={'Event Title'}
+
+						<label htmlFor='eventTitle' className='grey-text'>
+							Event Title
+						</label>
+						<input
+							type='text'
+							className='form-control'
+							id='eventTitle'
+							onChange={this.handleChange}
 						/>
 						<br />
+
 						<MDBRow>
 							<MDBCol size='6'>
-								<FormInput
-									type={'datetime-local'}
-									id={'dateTime'}
-									labelTitle={'Date/Time:'}
+								<label htmlFor='dateTime' className='grey-text'>
+									Date/Time:
+								</label>
+								<input
+									type='datetime-local'
+									className='form-control'
+									id='dateTime'
+									onChange={this.handleChange}
 								/>
+								<br />
 							</MDBCol>
 							<MDBCol size='6'>
-								<FormInput
-									type={'number'}
-									id={'limit'}
-									labelTitle={'Participants Limit:'}
+								<label htmlFor='limit' className='grey-text'>
+									Participant Limit:
+								</label>
+								<input
+									type='number'
+									className='form-control'
+									id='limit'
+									min='1'
+									onChange={this.handleChange}
 								/>
+								<br />
 							</MDBCol>
 						</MDBRow>
 
 						<br />
 						<MDBRow>
 							<MDBCol size='6'>
-								<FormInput
-									type={'text'}
-									id={'location'}
-									labelTitle={'Location:'}
+								<label htmlFor='location' className='grey-text'>
+									Location:
+								</label>
+								<input
+									type='text'
+									className='form-control'
+									id='location'
+									onChange={this.handleChange}
 								/>
 							</MDBCol>
 							<MDBCol size='6'>
-								<FormInput
-									type={'text'}
-									id={'zipCode'}
-									labelTitle={'Postal Code:'}
+								<label htmlFor='zipCode' className='grey-text'>
+									Postal Code:
+								</label>
+								<input
+									type='text'
+									className='form-control'
+									id='zipCode'
+									onChange={this.handleChange}
 								/>
 							</MDBCol>
 						</MDBRow>
@@ -59,14 +122,22 @@ class EventForm extends Component {
 								id='description'
 								className='form-control'
 								rows='3'
+								onChange={this.handleChange}
 							/>
 						</div>
 						<br />
 
 						{/* Event type as checkbox or dropdown menu? */}
 
-						<FormInput type={'text'} id={'image'} labelTitle={'Image:'} />
-
+						<label htmlFor='image' className='grey-text'>
+							Image:
+						</label>
+						<input
+							type='text'
+							className='form-control'
+							id='image'
+							onChange={this.handleChange}
+						/>
 						{/* <div>
 							<label htmlFor='image' className='grey-text'>
 								Image
