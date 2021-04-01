@@ -103,6 +103,7 @@ class App extends Component {
 								path='/register'
 								isAuthenticated={this.state.isAuthenticated}
 								component={Register}
+								handleLogin={this.handleLogin}
 							/>
 							<ProtectedRoute
 								exact
@@ -113,19 +114,18 @@ class App extends Component {
 							/>
 							<ProtectedRoute
 								exact
-								path='/event/form'
-								isAuthenticated={this.state.isAuthenticated}
-								handleLogout={this.handleLogout}
-								component={EventForm}
-							/>
-							<ProtectedRoute
-								exact
 								path='/event/:id'
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={Event}
 							/>
-
+							<ProtectedRoute
+								exact
+								path='/event/form'
+								isAuthenticated={this.state.isAuthenticated}
+								handleLogout={this.handleLogout}
+								component={EventForm}
+							/>
 							<ProtectedRoute
 								exact
 								path='/profile'
