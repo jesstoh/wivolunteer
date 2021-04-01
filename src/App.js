@@ -106,6 +106,7 @@ class App extends Component {
                                 path="/register"
                                 isAuthenticated={this.state.isAuthenticated}
                                 component={Register}
+                                handleLogin={this.handleLogin}
                             />
                             <ProtectedRoute
                                 exact
