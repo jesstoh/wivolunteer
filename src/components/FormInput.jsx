@@ -9,6 +9,7 @@ class FormInput extends Component {
 					type={this.props.type}
 					className='form-control'
 					id={this.props.id}
+					min='1'
 				/>
 			</>
 		);
