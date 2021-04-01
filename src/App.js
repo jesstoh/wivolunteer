@@ -31,9 +31,9 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAuthenticated: true,
+			isAuthenticated: null,
 			token: '',
-			user: '',
+			user: null,
 		};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
@@ -60,6 +60,8 @@ class App extends Component {
 				.catch((err) => {
 					localStorage.removeItem('token'); // remove invalid token
 				});
+		} else {
+			this.setState({ isAuthenticated: false });
 		}
 	}
 
@@ -75,7 +77,7 @@ class App extends Component {
 	}
 
 	render() {
-		return (
+		return this.state.isAuthenticated === null ? null : (
 			<React.Fragment>
 				<Router>
 					{this.state.isAuthenticated ? (
@@ -112,7 +114,6 @@ class App extends Component {
 								handleLogout={this.handleLogout}
 								component={HomePage}
 							/>
-
 							<ProtectedRoute
 								exact
 								path='/event/form'
@@ -120,7 +121,6 @@ class App extends Component {
 								handleLogout={this.handleLogout}
 								component={EventForm}
 							/>
-
 							<ProtectedRoute
 								exact
 								path='/event/:id'
@@ -128,7 +128,6 @@ class App extends Component {
 								handleLogout={this.handleLogout}
 								component={Event}
 							/>
-
 							<ProtectedRoute
 								exact
 								path='/profile'
