@@ -58,7 +58,8 @@ class App extends Component {
 					});
 				})
 				.catch((err) => {
-					localStorage.removeItem('token'); // remove invalid token
+                    localStorage.removeItem('token'); // remove invalid token
+                    this.handleLogout();
 				});
 		} else {
 			this.setState({ isAuthenticated: false });
