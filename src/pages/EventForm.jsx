@@ -14,16 +14,35 @@ class EventForm extends Component {
 			zipCode: '',
 			description: '',
 			image: '',
+			eventType: [],
 		};
 		// set as initial state
 		this.state = this.initialState;
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handelChangeCheckbox = this.handelChangeCheckbox.bind(this);
 	}
 
 	handleChange(event) {
 		this.setState({ [event.target.id]: event.target.value });
+	}
+	handelChangeCheckbox(event) {
+		const checkBox = event.target;
+		const eventType = this.state.eventType;
+		if (checkBox.checked) {
+			eventType.push(checkBox.id);
+			this.setState(eventType);
+		} else {
+			let index = eventType.indexOf(checkBox.id);
+			if (index > -1) {
+				eventType.splice(index, 1);
+				this.setState({
+					eventType: eventType,
+				});
+			}
+		}
+		console.log(this.state.eventType);
 	}
 
 	handleSubmit(event) {
@@ -51,7 +70,7 @@ class EventForm extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<MDBContainer className='mt-5'>
+				<MDBContainer className='mt-5 mb-5' size='lg'>
 					<form onSubmit={this.handleSubmit}>
 						<p className='h4 text-center mb-4'>Create an Event</p>
 
@@ -126,6 +145,7 @@ class EventForm extends Component {
 						</MDBRow>
 
 						<br />
+
 						<div>
 							<label htmlFor='description' className='grey-text'>
 								Event Description:
@@ -140,9 +160,91 @@ class EventForm extends Component {
 							/>
 						</div>
 						<br />
+						<MDBRow>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='humanitarian'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='humanitarian'>
+										Humanitarian
+									</label>
+								</div>
+							</MDBCol>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='environment'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='environment'>
+										Environment
+									</label>
+								</div>
+							</MDBCol>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='animal-welfare'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='animal-welfare'>
+										Animal-Welfare
+									</label>
+								</div>
+							</MDBCol>
+						</MDBRow>
+						<br />
+						<MDBRow>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='community'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='community'>
+										Community
+									</label>
+								</div>
+							</MDBCol>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='disability'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='disability'>
+										Disability
+									</label>
+								</div>
+							</MDBCol>
+							<MDBCol size='4'>
+								<div class='custom-control custom-checkbox'>
+									<input
+										type='checkbox'
+										class='custom-control-input'
+										id='health'
+										onChange={this.handelChangeCheckbox}
+									/>
+									<label class='custom-control-label' for='health'>
+										Health
+									</label>
+								</div>
+							</MDBCol>
+						</MDBRow>
 
-						{/* Event type as checkbox or dropdown menu? */}
-
+						<br />
 						<label htmlFor='image' className='grey-text'>
 							Image:
 						</label>

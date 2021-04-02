@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBTypography, MDBCol, MDBRow } from 'mdbreact';
+import EventsContainer from '../components/EventsContainer.jsx';
 import axios from 'axios';
 class UserEvents extends Component {
 	constructor(props) {
@@ -13,6 +14,7 @@ class UserEvents extends Component {
 
 	onClick(event) {
 		event.preventDefault();
+		console.log(this.state.userEvents);
 	}
 
 	componentDidMount() {
@@ -21,7 +23,7 @@ class UserEvents extends Component {
 
 		// fetch user events
 		axios
-			.get(`${process.env.REACT_APP_API_URL}/users/events`, {
+			.get(`${process.env.REACT_APP_API_URL}/events/all`, {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
@@ -53,6 +55,12 @@ class UserEvents extends Component {
 							<h5 onClick={this.onClick}>
 								<a>Past Events</a>
 							</h5>
+						</MDBCol>
+					</MDBRow>
+					<br />
+					<MDBRow>
+						<MDBCol size='12'>
+							<EventsContainer eventData={this.state.userEvents} />
 						</MDBCol>
 					</MDBRow>
 				</MDBContainer>

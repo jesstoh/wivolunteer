@@ -9,3 +9,7 @@ main {
 .carousel-caption {
     bottom: 60%;
 }
+
+.btn-rounded {
+    border-radius: 30px;
+}
