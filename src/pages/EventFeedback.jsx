@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { MDBContainer, MDBFormInline, MDBInput, MDBBtn } from 'mdbreact';
+import axios from 'axios';
 
 class EventFeedback extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isFeedbackDone: false,
 			eventTitle: this.props.eventTitle,
 			qn1: 'Just nice',
 			qn2: 3,
@@ -20,9 +23,37 @@ class EventFeedback extends Component {
 	};
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state);
+		// set data payload
+		const data = {
+			hasEnoughResources: this.state.qn1,
+			isWellOrganised: this.state.qn2,
+			isSatisfied: this.state.qn3,
+		};
+		// get token from localStorage
+		const token = localStorage.getItem('token');
+		// get id from url params
+		const id = this.props.match.params.id;
+
+		// create feedback
+		axios
+			.post(`${process.env.REACT_APP_API_URL}/feedback/${id}`, data, {
+				headers: { authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				// alert user feedback is submitted and set feedback done to true
+				alert('Feedback received!');
+				this.setState({ isFeedbackDone: true });
+			})
+			.catch((err) => {
+				alert(err);
+			});
 	}
 	render() {
+		// if feedback is submitted redirect to home
+		if (this.state.isFeedbackDone) {
+			return <Redirect to='/home' />;
+		}
+
 		return (
 			<React.Fragment>
 				<MDBContainer className='mt-5'>
