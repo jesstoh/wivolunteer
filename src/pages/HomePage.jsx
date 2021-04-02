@@ -28,7 +28,11 @@ class HomePage extends Component {
                 headers: { authorization: `Bearer ${token}` },
             })
             .then((response) => {
-                this.setState({ eventData: response.data });
+                this.setState({ eventData: response.data },()=>{
+                    console.log(this.state.eventData)
+                    console.log(this.state.eventData===[])
+                });
+            
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -102,7 +106,7 @@ class HomePage extends Component {
                 </MDBRow>
                 <MDBRow className="pt-5">
                     <MDBCol md="7" lg="8">
-                        {!this.state.eventData ? null : (
+                        {!this.state.eventData? null : (
                             <EventsContainer eventData={this.state.eventData} />
                         )}
                     </MDBCol>
