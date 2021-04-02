@@ -9,16 +9,16 @@ class HomePage extends Component {
         super(props);
         this.state = {
             date: new Date(),
-            baseURL: `${process.env.REACT_APP_API_URL}/events/`,
-            url: `${process.env.REACT_APP_API_URL}/events/`,
+            baseURL: `${process.env.REACT_APP_API_URL}/events`,
+            url: `${process.env.REACT_APP_API_URL}/events`,
         };
         this.dateChange = this.dateChange.bind(this);
     }
 
     // Handle date change on calendar
     dateChange(value, event) {
-        this.setState({ date: value }, () => {
-            console.log(this.state.date.toISOString());
+        this.setState({ date: value, url: this.state.baseURL + `/?date=${value.toISOString()}`}, () => {
+            this.fetchData();
         });
     }
 
@@ -40,6 +40,7 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
+        // Fetch events of interests based on date today
         this.fetchData();
     }
 
