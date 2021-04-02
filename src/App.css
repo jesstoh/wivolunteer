@@ -1,4 +1,11 @@
+/* * {
+    border: 2px solid red;
+} */
+
 main {
     padding-top: 60px;
 }
 
+.carousel-caption {
+    bottom: 60%;
+}
