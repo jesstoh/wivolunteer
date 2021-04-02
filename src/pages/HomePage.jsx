@@ -9,17 +9,13 @@ class HomePage extends Component {
         super(props);
         this.state = {
             date: new Date(),
+            all: false, // all events or event of interests
             baseURL: `${process.env.REACT_APP_API_URL}/events`,
             url: `${process.env.REACT_APP_API_URL}/events`,
         };
         this.dateChange = this.dateChange.bind(this);
-    }
-
-    // Handle date change on calendar
-    dateChange(value, event) {
-        this.setState({ date: value, url: this.state.baseURL + `/?date=${value.toISOString()}`}, () => {
-            this.fetchData();
-        });
+        // this.showAll = this.showAll.bind(this);
+        this.toggleAll = this.toggleAll.bind(this);
     }
 
     // Fetch event data
@@ -44,13 +40,63 @@ class HomePage extends Component {
         this.fetchData();
     }
 
+    // Handle date change on calendar
+    dateChange(value, event) {
+        this.setState(
+            {
+                date: value,
+                url: this.state.baseURL + `${this.state.all ? "/all" : ""}` + `/?date=${value.toISOString()}`,
+            },
+            () => {
+                this.fetchData();
+            }
+        );
+    }
+
+    // When clicking on all button
+    // showAll(event) {
+    //     this.setState(
+    //         {
+    //             all: true,
+    //             url:
+    //                 this.state.baseURL + 
+    //                 `/all/?date=${this.state.date.toISOString()}`,
+    //         },
+    //         () => {
+    //             this.fetchData();
+    //         }
+    //     );
+    // }
+
+    // Toggle interest or all buttons, to show all or event of interest
+    toggleAll(event) {
+        if (!event.target.active) {
+            this.setState(
+                {
+                    all: !this.state.all,
+                    url:
+                        this.state.baseURL +
+                        `${this.state.all ? "" : "/all"}` +
+                        `/?date=${this.state.date.toISOString()}`,
+                },
+                () => {
+                    this.fetchData();
+                }
+            );
+        }
+    }
+
     render() {
         return (
             <MDBContainer className="pt-4">
                 <MDBRow>Search Bar</MDBRow>
                 <MDBRow>
-                    <MDBBtn>Interest</MDBBtn>
-                    <MDBBtn>All</MDBBtn>
+                    <MDBBtn active={!this.state.all} onClick={this.toggleAll}>
+                        Interests
+                    </MDBBtn>
+                    <MDBBtn active={this.state.all} onClick={this.toggleAll}>
+                        All
+                    </MDBBtn>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="7" lg="8">
