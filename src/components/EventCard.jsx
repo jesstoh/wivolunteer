@@ -15,7 +15,7 @@ class EventCard extends Component {
         return (
             <MDBCol>
                 <Link to={"/event/" + this.props.event._id}>
-                    <MDBCard style={{ width: "80%" }}>
+                    <MDBCard style={{ width: "90%" }}>
                         <MDBCardBody>
                             <MDBCardTitle>
                                 {this.props.event.eventTitle}

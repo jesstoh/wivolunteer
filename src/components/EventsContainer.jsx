@@ -5,11 +5,11 @@ import EventCard from "./EventCard.jsx";
 class EventsContainer extends Component {
     render() {
         return (
-            <MDBContainer>
+            <div style={{width: "100%"}}>
                 {this.props.eventData.map((event) => (
                     <EventCard key={event._id} event={event} />
                 ))}
-            </MDBContainer>
+            </div>
         );
     }
 }

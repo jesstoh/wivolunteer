@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 
-import EventsContainer from "../components/EventsContainer.jsx"
+import EventsContainer from "../components/EventsContainer.jsx";
 
 class HomePage extends Component {
     constructor(props) {
@@ -29,7 +29,6 @@ class HomePage extends Component {
             })
             .then((response) => {
                 this.setState({ eventData: response.data });
-                
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -82,28 +81,30 @@ class HomePage extends Component {
             <MDBContainer className="pt-4">
                 <MDBRow>Search Bar</MDBRow>
                 <MDBRow>
-                    <MDBBtn
-                        active={!this.state.all}
-                        onClick={this.toggleAll}
-                        className="btn-rounded"
-                        color="blue-grey"
-                    >
-                        Interests
-                    </MDBBtn>
-                    <MDBBtn
-                        active={this.state.all}
-                        onClick={this.toggleAll}
-                        className="btn-rounded"
-                        color="blue-grey"
-                    >
-                        All
-                    </MDBBtn>
+                    <MDBCol className="pl-4">
+                        <MDBBtn
+                            active={!this.state.all}
+                            onClick={this.toggleAll}
+                            className="btn-rounded"
+                            color="blue-grey"
+                        >
+                            Interests
+                        </MDBBtn>
+                        <MDBBtn
+                            active={this.state.all}
+                            onClick={this.toggleAll}
+                            className="btn-rounded"
+                            color="blue-grey"
+                        >
+                            All
+                        </MDBBtn>
+                    </MDBCol>
                 </MDBRow>
-                <MDBRow>
+                <MDBRow className="pt-5">
                     <MDBCol md="7" lg="8">
-                        {!this.state.eventData
-                            ? null
-                            : <EventsContainer eventData={this.state.eventData}/>}
+                        {!this.state.eventData ? null : (
+                            <EventsContainer eventData={this.state.eventData} />
+                        )}
                     </MDBCol>
                     <MDBCol md="5" lg="4">
                         <Calendar
