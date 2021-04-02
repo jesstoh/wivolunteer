@@ -10,6 +10,7 @@
     "chart.js": "^2.9.4",
     "mdbreact": "^5.0.1",
     "react": "^17.0.1",
+    "react-calendar": "^3.3.1",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^17.0.1",
     "react-google-login": "^5.2.2",
