@@ -91,10 +91,10 @@ class HomePage extends Component {
             <MDBContainer className="pt-4">
                 <MDBRow>Search Bar</MDBRow>
                 <MDBRow>
-                    <MDBBtn active={!this.state.all} onClick={this.toggleAll}>
+                    <MDBBtn active={!this.state.all} onClick={this.toggleAll} className="btn-rounded" color="blue-grey">
                         Interests
                     </MDBBtn>
-                    <MDBBtn active={this.state.all} onClick={this.toggleAll}>
+                    <MDBBtn active={this.state.all} onClick={this.toggleAll} className="btn-rounded" color="blue-grey">
                         All
                     </MDBBtn>
                 </MDBRow>
