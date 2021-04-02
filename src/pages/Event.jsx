@@ -1,5 +1,16 @@
 import axios from "axios";
 import React, { Component } from "react";
+import {
+    MDBContainer,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBCardTitle,
+    MDBCardText,
+    MDBCol,
+    MDBRow,
+} from "mdbreact";
 
 class Event extends Component {
     constructor(props) {
@@ -36,9 +47,31 @@ class Event extends Component {
 
     render() {
         return !this.state.event ? null : (
-            <React.Fragment>
-                <h1>Event Page {this.props.match.params.id}</h1>
-            </React.Fragment>
+            <MDBContainer className="pt-5">
+            <MDBCol md="9" className="offset-md-1">
+                <MDBCard>
+                    <MDBCardImage
+                        className="img-fluid" top
+                        src={this.state.event.image}
+                        waves
+                    />
+                    <MDBCardBody>
+                        <MDBCardTitle>{this.state.event.eventTitle}</MDBCardTitle>
+                        <MDBCardText>
+                            Date Time: {this.state.event.dateTime}<br/>
+                            Organized by: {this.state.event.organiser.username}<br/>
+                            Location: {this.state.event.location} <br/>
+                            Event Type: {this.state.event.eventType} <br/>
+                            Event Description: {this.state.event.description}<br/>
+                            Attendees: {this.state.event.participants.length} / {this.state.event.limit} <br/>
+                            Wish: {this.state.event.interested.length}
+                        </MDBCardText>
+                        <MDBRow>Footer</MDBRow>
+                    </MDBCardBody>
+                    
+                </MDBCard>
+                </MDBCol>
+            </MDBContainer>
         );
     }
 }
