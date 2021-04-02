@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 
-import EventCard from "../components/EventCard.jsx";
+import EventsContainer from "../components/EventsContainer.jsx"
 
 class HomePage extends Component {
     constructor(props) {
@@ -103,9 +103,7 @@ class HomePage extends Component {
                     <MDBCol md="7" lg="8">
                         {!this.state.eventData
                             ? null
-                            : this.state.eventData.map((event) => {
-                                  return <EventCard key={event._id} event={event} />;
-                              })}
+                            : <EventsContainer eventData={this.state.eventData}/>}
                     </MDBCol>
                     <MDBCol md="5" lg="4">
                         <Calendar
