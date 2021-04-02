@@ -17,7 +17,6 @@ class HomePage extends Component {
             eventData: null,
         };
         this.dateChange = this.dateChange.bind(this);
-        // this.showAll = this.showAll.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
     }
 
@@ -59,21 +58,6 @@ class HomePage extends Component {
             }
         );
     }
-
-    // When clicking on all button
-    // showAll(event) {
-    //     this.setState(
-    //         {
-    //             all: true,
-    //             url:
-    //                 this.state.baseURL +
-    //                 `/all/?date=${this.state.date.toISOString()}`,
-    //         },
-    //         () => {
-    //             this.fetchData();
-    //         }
-    //     );
-    // }
 
     // Toggle interest or all buttons, to show all or event of interest
     toggleAll(event) {
