@@ -2,19 +2,45 @@ import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import axios from "axios";
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { date: new Date() };
+        this.state = {
+            date: new Date(),
+            baseURL: `${process.env.REACT_APP_API_URL}/events/`,
+            url: `${process.env.REACT_APP_API_URL}/events/`,
+        };
         this.dateChange = this.dateChange.bind(this);
     }
 
     // Handle date change on calendar
     dateChange(value, event) {
         this.setState({ date: value }, () => {
-            console.log(this.state.date);
+            console.log(this.state.date.toISOString());
         });
+    }
+
+    // Fetch event data
+    fetchData() {
+        const token = localStorage.getItem("token");
+        axios
+            .get(this.state.url, {
+                headers: { authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    this.props.handleLogout();
+                }
+            });
+    }
+
+    componentDidMount() {
+        this.fetchData();
     }
 
     render() {
