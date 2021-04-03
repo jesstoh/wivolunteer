@@ -1,8 +1,9 @@
 import axios from "axios";
-import { MDBBtn, MDBRow, MDBIcon } from "mdbreact";
+import { MDBBtn, MDBIcon } from "mdbreact";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import FeedbackAction from "../components/FeedbackAction.jsx";
+import ParticipantsModal from "../components/ParticipantsModal.jsx";
 
 class EventAction extends Component {
     constructor(props) {
@@ -128,6 +129,7 @@ class EventAction extends Component {
         const noInterest =
             this.props.event.participants.length === 0 &&
             this.props.event.interested.length === 0;
+
         if (this.props.user._id === this.props.event.organiser._id) {
             //////ORGANISER ACTION//////
             if (new Date(this.props.event.dateTime) > new Date()) {
@@ -155,6 +157,10 @@ class EventAction extends Component {
                                 Edit Event
                             </MDBBtn>
                         </Link>
+                        {/* Display Participant contacts */}
+                        <ParticipantsModal
+                            participants={this.props.event.participants}
+                        />
                     </React.Fragment>
                 );
             }
@@ -179,7 +185,11 @@ class EventAction extends Component {
             ) {
                 // Action to un-join event
                 return (
-                    <MDBBtn onClick={this.dropEvent} color="warning" className="btn-rounded">
+                    <MDBBtn
+                        onClick={this.dropEvent}
+                        color="warning"
+                        className="btn-rounded"
+                    >
                         <MDBIcon icon="times" size="lg" /> Not Going
                     </MDBBtn>
                 );
@@ -189,18 +199,37 @@ class EventAction extends Component {
                     <React.Fragment>
                         {this.props.event.participants.length ===
                         this.props.event.limit ? (
-                            <MDBBtn disabled color="blue-grey">Full</MDBBtn>
+                            <MDBBtn disabled color="blue-grey">
+                                Full
+                            </MDBBtn>
                         ) : (
-                            <MDBBtn onClick={this.joinEvent} className="btn-rounded"> 
+                            <MDBBtn
+                                onClick={this.joinEvent}
+                                className="btn-rounded"
+                            >
                                 <MDBIcon icon="check" size="lg" /> Join
                             </MDBBtn>
                         )}
-                        <MDBBtn
-                
-                            onClick={this.toggleWish} color="white"
-                        >
-                            
-                            {this.state.wish ? <MDBIcon icon="heart" size="lg" className="red-text" > Wished </MDBIcon>: <MDBIcon far icon="heart" size="lg" className="black-text">Add to wish list</MDBIcon>}
+                        <MDBBtn onClick={this.toggleWish} color="white">
+                            {this.state.wish ? (
+                                <MDBIcon
+                                    icon="heart"
+                                    size="lg"
+                                    className="red-text"
+                                >
+                                    {" "}
+                                    Wished{" "}
+                                </MDBIcon>
+                            ) : (
+                                <MDBIcon
+                                    far
+                                    icon="heart"
+                                    size="lg"
+                                    className="black-text"
+                                >
+                                    Add to wish list
+                                </MDBIcon>
+                            )}
                         </MDBBtn>
                     </React.Fragment>
                 );
