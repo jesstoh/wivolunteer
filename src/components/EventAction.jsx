@@ -1,8 +1,9 @@
 import axios from "axios";
-import { MDBBtn, MDBRow, MDBIcon } from "mdbreact";
+import { MDBBtn, MDBIcon } from "mdbreact";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import FeedbackAction from "../components/FeedbackAction.jsx";
+import ParticipantsModal from "../components/ParticipantsModal.jsx";
 
 class EventAction extends Component {
     constructor(props) {
@@ -114,7 +115,7 @@ class EventAction extends Component {
             )
             .then((response) => {
                 this.props.fetchEvent();
-                this.setState({wish: !this.state.wish});
+                this.setState({ wish: !this.state.wish });
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -128,6 +129,7 @@ class EventAction extends Component {
         const noInterest =
             this.props.event.participants.length === 0 &&
             this.props.event.interested.length === 0;
+
         if (this.props.user._id === this.props.event.organiser._id) {
             //////ORGANISER ACTION//////
             if (new Date(this.props.event.dateTime) > new Date()) {
@@ -150,11 +152,15 @@ class EventAction extends Component {
                                 Cancel Event
                             </MDBBtn>
                         )}
-                        <Link to={"/event/"  + "edit/" + this.props.event._id}>
+                        <Link to={"/event/" + "edit/" + this.props.event._id}>
                             <MDBBtn outline color="warning">
                                 Edit Event
                             </MDBBtn>
                         </Link>
+                        {/* Display Participant contacts */}
+                        <ParticipantsModal
+                            participants={this.props.event.participants}
+                        />
                     </React.Fragment>
                 );
             }
@@ -163,7 +169,12 @@ class EventAction extends Component {
             //////USER ACTION//////
             // Render feedback action component for past event
             if (new Date(this.props.event.dateTime) < new Date()) {
-                return (<FeedbackAction eventId={this.props.event._id} userId={this.props.user._id}/>)
+                return (
+                    <FeedbackAction
+                        eventId={this.props.event._id}
+                        userId={this.props.user._id}
+                    />
+                );
             }
 
             // Render available user action for on-going event
@@ -174,7 +185,11 @@ class EventAction extends Component {
             ) {
                 // Action to un-join event
                 return (
-                    <MDBBtn onClick={this.dropEvent} color="warning">
+                    <MDBBtn
+                        onClick={this.dropEvent}
+                        color="warning"
+                        className="btn-rounded"
+                    >
                         <MDBIcon icon="times" size="lg" /> Not Going
                     </MDBBtn>
                 );
@@ -182,15 +197,39 @@ class EventAction extends Component {
                 // Action to join event or add to wish list
                 return (
                     <React.Fragment>
-                        <MDBBtn onClick={this.joinEvent}>
-                            <MDBIcon icon="check" size="lg" /> Join
-                        </MDBBtn>
-                        <MDBBtn
-                            active={this.state.wish}
-                            onClick={this.toggleWish}
-                        >
-                            <MDBIcon icon="heart" size="lg" />
-                            {this.state.wish ? " Wished" : " Add to wish list"}
+                        {this.props.event.participants.length ===
+                        this.props.event.limit ? (
+                            <MDBBtn disabled color="blue-grey">
+                                Full
+                            </MDBBtn>
+                        ) : (
+                            <MDBBtn
+                                onClick={this.joinEvent}
+                                className="btn-rounded"
+                            >
+                                <MDBIcon icon="check" size="lg" /> Join
+                            </MDBBtn>
+                        )}
+                        <MDBBtn onClick={this.toggleWish} color="white">
+                            {this.state.wish ? (
+                                <MDBIcon
+                                    icon="heart"
+                                    size="lg"
+                                    className="red-text"
+                                >
+                                    {" "}
+                                    Wished{" "}
+                                </MDBIcon>
+                            ) : (
+                                <MDBIcon
+                                    far
+                                    icon="heart"
+                                    size="lg"
+                                    className="black-text"
+                                >
+                                    Add to wish list
+                                </MDBIcon>
+                            )}
                         </MDBBtn>
                     </React.Fragment>
                 );
