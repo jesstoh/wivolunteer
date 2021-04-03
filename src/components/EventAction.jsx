@@ -61,8 +61,8 @@ class EventAction extends Component {
     // Join Event
     joinEvent() {
         const token = localStorage.getItem("token");
-        console.log(token);
-        console.log(this.props.event._id);
+        // console.log(token);
+        // console.log(this.props.event._id);
         axios
             .put(
                 `${process.env.REACT_APP_API_URL}/events/${this.props.event._id}/join`,
@@ -150,7 +150,7 @@ class EventAction extends Component {
                                 Cancel Event
                             </MDBBtn>
                         )}
-                        <Link to={"/event/" + this.props.event._id + "/edit"}>
+                        <Link to={"/event/"  + "edit/" + this.props.event._id}>
                             <MDBBtn outline color="warning">
                                 Edit Event
                             </MDBBtn>

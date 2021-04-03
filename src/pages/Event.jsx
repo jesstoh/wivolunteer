@@ -30,9 +30,7 @@ class Event extends Component {
                 { headers: { authorization: `Bearer ${token}` } }
             )
             .then((response) => {
-                this.setState({ event: response.data }, () => {
-                    console.log(this.state.event);
-                });
+                this.setState({ event: response.data });
             })
             .catch((err) => {
                 console.log(err);
@@ -82,11 +80,16 @@ class Event extends Component {
                                 Wish: {this.state.event.interested.length}
                             </MDBCardText>
                             <MDBRow>
-                                {this.state.event.isCancelled ? <span className="red-text">Event Cancelled</span> : (
+                                {this.state.event.isCancelled ? (
+                                    <span className="red-text">
+                                        Event Cancelled
+                                    </span>
+                                ) : (
                                     <EventAction
                                         event={this.state.event}
                                         user={this.props.user}
-                                        fetchEvent={this.fetchEvent} handleLogout={this.props.handleLogout}
+                                        fetchEvent={this.fetchEvent}
+                                        handleLogout={this.props.handleLogout}
                                     />
                                 )}
                             </MDBRow>
