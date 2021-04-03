@@ -32,7 +32,6 @@ class EventForm extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				console.log(response.data);
 				this.setState(response.data);
 			});
 	}
@@ -55,7 +54,6 @@ class EventForm extends Component {
 				});
 			}
 		}
-		console.log(this.state.eventType);
 	}
 
 	handleSubmit(event) {
@@ -74,13 +72,11 @@ class EventForm extends Component {
 			})
 			.then((response) => {
 				alert("Event Updated");
-				return <Redirect to={`event/${id}`} />;
 			})
 			.catch((err) => {
 				alert(err);
 			});
 		this.setState(this.initialState);
-		// reset the form data
 	}
 
 	render() {
@@ -178,40 +174,46 @@ class EventForm extends Component {
 						<br />
 						<MDBRow>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="humanitarian"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="humanitarian">
+									<label
+										className="custom-control-label"
+										htmlFor="humanitarian"
+									>
 										Humanitarian
 									</label>
 								</div>
 							</MDBCol>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="environment"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="environment">
+									<label className="custom-control-label" htmlFor="environment">
 										Environment
 									</label>
 								</div>
 							</MDBCol>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="animal-welfare"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="animal-welfare">
+									<label
+										className="custom-control-label"
+										htmlFor="animal-welfare"
+									>
 										Animal-Welfare
 									</label>
 								</div>
@@ -220,40 +222,40 @@ class EventForm extends Component {
 						<br />
 						<MDBRow>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="community"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="community">
+									<label className="custom-control-label" htmlFor="community">
 										Community
 									</label>
 								</div>
 							</MDBCol>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="disability"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="disability">
+									<label className="custom-control-label" htmlFor="disability">
 										Disability
 									</label>
 								</div>
 							</MDBCol>
 							<MDBCol size="4">
-								<div class="custom-control custom-checkbox">
+								<div className="custom-control custom-checkbox">
 									<input
 										type="checkbox"
-										class="custom-control-input"
+										className="custom-control-input"
 										id="health"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class="custom-control-label" for="health">
+									<label className="custom-control-label" htmlFor="health">
 										Health
 									</label>
 								</div>
