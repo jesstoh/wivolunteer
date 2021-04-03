@@ -49,7 +49,7 @@ class UserProfile extends Component {
 						<MDBCol>
 							<img
 								src={this.state.userProfile.image}
-								className="rounded-circle mx-auto d-block img-thumbnail m-5"
+								className="rounded-circle mx-auto d-block m-3"
 								alt="aligment"
 							/>
 						</MDBCol>
@@ -62,17 +62,23 @@ class UserProfile extends Component {
 						<MDBIcon icon="envelope" className="mr-3" />
 						{this.state.userProfile.email}
 					</h5>
-					<h5>Interests: </h5>
-					{!this.state.userProfile
-						? ""
-						: this.state.userProfile.interests.map((interest) => {
-								return (
-									<MDBBadge pill color="primary" className="mr-3">
-										{interest}
-									</MDBBadge>
-								);
-						  })}
+					<h5>
+						<span>Interests: </span>
+						{!this.state.userProfile
+							? ""
+							: this.state.userProfile.interests.map((interest) => {
+									return (
+										<MDBBadge pill color="primary" className="m-2">
+											{interest}
+										</MDBBadge>
+									);
+							  })}
+					</h5>
 
+					<MDBBtn color="blue" outline type="submit" className="mb-4">
+						<a href="/profile/edit">Edit Profile</a>
+					</MDBBtn>
+					<h5>Interested Events</h5>
 					<EventsContainer
 						eventData={this.state.userProfile.interestedEvents}
 					/>
