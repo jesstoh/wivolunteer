@@ -13,7 +13,6 @@ class UserProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			collapseID: "",
 			userProfile: {
 				email: "",
 				interestedEvents: [],
@@ -40,7 +39,6 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		console.log(this.state.userProfile);
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-4 text-center">
