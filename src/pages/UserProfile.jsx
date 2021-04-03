@@ -50,7 +50,7 @@ class UserProfile extends Component {
 							<img
 								src={this.state.userProfile.image}
 								className="rounded-circle mx-auto d-block m-3"
-								alt="aligment"
+								alt="profile image"
 							/>
 						</MDBCol>
 					</MDBRow>
