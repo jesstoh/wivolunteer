@@ -6,8 +6,7 @@ import axios from "axios";
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
-		// set initial state of form data
-		this.initialState = {
+		this.state = {
 			eventTitle: "",
 			dateTime: "",
 			limit: 1,
@@ -17,17 +16,33 @@ class EventForm extends Component {
 			image: "",
 			eventType: [],
 		};
-		// set as initial state
-		this.state = this.initialState;
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handelChangeCheckbox = this.handelChangeCheckbox.bind(this);
 	}
+	componentDidMount() {
+		// get token from localStorage
+		const token = localStorage.getItem("token");
+		// get id from url params
+		const id = this.props.match.params.id;
+
+		axios
+			.get(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+				headers: { authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				// format date to display in dateTime input
+				response.data.dateTime = response.data.dateTime.split(".")[0];
+				// set data as state
+				this.setState(response.data);
+			});
+	}
 
 	handleChange(event) {
 		this.setState({ [event.target.id]: event.target.value });
 	}
+
 	handelChangeCheckbox(event) {
 		const checkBox = event.target;
 		const eventType = this.state.eventType;
@@ -51,14 +66,16 @@ class EventForm extends Component {
 		const data = this.state;
 		// get token from localStorage
 		const token = localStorage.getItem("token");
+		// get id from url params
+		const id = this.props.match.params.id;
 
-		// create event
+		// update event
 		axios
-			.post(`${process.env.REACT_APP_API_URL}/events`, data, {
+			.put(`${process.env.REACT_APP_API_URL}/events/${id}/edit`, data, {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				alert("Event Created, Redirecting to My Events");
+				alert("Event Updated");
 			})
 			.catch((err) => {
 				alert(err);
@@ -71,7 +88,7 @@ class EventForm extends Component {
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
 					<form onSubmit={this.handleSubmit}>
-						<p className="h4 text-center mb-4">Create an Event</p>
+						<p className="h4 text-center mb-4">Edit Event</p>
 
 						<label htmlFor="eventTitle" className="grey-text">
 							Event Title
@@ -167,6 +184,7 @@ class EventForm extends Component {
 										className="custom-control-input"
 										id="humanitarian"
 										onChange={this.handelChangeCheckbox}
+										defaultChecked={false}
 									/>
 									<label
 										className="custom-control-label"
@@ -260,26 +278,10 @@ class EventForm extends Component {
 							value={this.state.image}
 							onChange={this.handleChange}
 						/>
-						{/* <div>
-							<label htmlFor='image' className='grey-text'>
-								Image
-							</label>
-							<div className='custom-file'>
-								<input
-									type='file'
-									className='custom-file-input'
-									id='inputGroupFile01'
-									aria-describedby='inputGroupFileAddon01'
-								/>
-								<label className='custom-file-label' htmlFor='inputGroupFile01'>
-									Select Image
-								</label>
-							</div>
-						</div> */}
 
 						<div className="text-center mt-4">
 							<MDBBtn color="blue" outline type="submit">
-								Create Event
+								Update Event
 							</MDBBtn>
 						</div>
 					</form>
