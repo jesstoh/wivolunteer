@@ -86,7 +86,7 @@ class Event extends Component {
                                     <EventAction
                                         event={this.state.event}
                                         user={this.props.user}
-                                        fetchEvent={this.fetchEvent}
+                                        fetchEvent={this.fetchEvent} handleLogout={this.props.handleLogout}
                                     />
                                 )}
                             </MDBRow>
