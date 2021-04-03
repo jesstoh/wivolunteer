@@ -114,7 +114,7 @@ class EventAction extends Component {
             )
             .then((response) => {
                 this.props.fetchEvent();
-                this.setState({wish: !this.state.wish});
+                this.setState({ wish: !this.state.wish });
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -150,7 +150,7 @@ class EventAction extends Component {
                                 Cancel Event
                             </MDBBtn>
                         )}
-                        <Link to={"/event/"  + "edit/" + this.props.event._id}>
+                        <Link to={"/event/" + "edit/" + this.props.event._id}>
                             <MDBBtn outline color="warning">
                                 Edit Event
                             </MDBBtn>
@@ -163,7 +163,12 @@ class EventAction extends Component {
             //////USER ACTION//////
             // Render feedback action component for past event
             if (new Date(this.props.event.dateTime) < new Date()) {
-                return (<FeedbackAction eventId={this.props.event._id} userId={this.props.user._id}/>)
+                return (
+                    <FeedbackAction
+                        eventId={this.props.event._id}
+                        userId={this.props.user._id}
+                    />
+                );
             }
 
             // Render available user action for on-going event
@@ -182,9 +187,14 @@ class EventAction extends Component {
                 // Action to join event or add to wish list
                 return (
                     <React.Fragment>
-                        <MDBBtn onClick={this.joinEvent}>
-                            <MDBIcon icon="check" size="lg" /> Join
-                        </MDBBtn>
+                        {this.props.event.participants.length ===
+                        this.props.event.limit ? (
+                            <MDBBtn disabled color="blue-grey">Full</MDBBtn>
+                        ) : (
+                            <MDBBtn onClick={this.joinEvent}>
+                                <MDBIcon icon="check" size="lg" /> Join
+                            </MDBBtn>
+                        )}
                         <MDBBtn
                             active={this.state.wish}
                             onClick={this.toggleWish}
