@@ -82,7 +82,7 @@ class Event extends Component {
                                 Wish: {this.state.event.interested.length}
                             </MDBCardText>
                             <MDBRow>
-                                {this.state.event.isCancelled ? null : (
+                                {this.state.event.isCancelled ? <span className="red-text">Event Cancelled</span> : (
                                     <EventAction
                                         event={this.state.event}
                                         user={this.props.user}

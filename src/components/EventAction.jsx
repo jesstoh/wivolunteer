@@ -1,21 +1,57 @@
+import axios from "axios";
 import { MDBBtn, MDBRow } from "mdbreact";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class EventAction extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            wish: this.props.user.interestedEvents.includes(this.props.event._id)
-        }
+            wish: this.props.user.interestedEvents.includes(
+                this.props.event._id
+            ),
+        };
+        this.cancelEvent = this.cancelEvent.bind(this);
     }
+
+    // Organizer cancel event
+    cancelEvent() {
+        const token = localStorage.getItem("token");
+        axios
+            .put(
+                `${process.env.REACT_APP_API_URL}/events/${this.props.event._id}/edit`,
+                { isCancelled: true },
+                {
+                    headers: { authorization: `Bearer ${token}` },
+                }
+            )
+            .then((response) => this.props.fetchEvent())
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    this.props.handleLogout();
+                }
+            });
+    }
+
     render() {
         if (this.props.user._id === this.props.event.organiser._id) {
             //////ORGANISER ACTION//////
             if (new Date(this.props.event.dateTime) > new Date()) {
                 return (
-                    <MDBBtn outline color="warning">
-                        Cancel Event
-                    </MDBBtn>
+                    <React.Fragment>
+                        <MDBBtn
+                            outline
+                            color="danger"
+                            onClick={this.cancelEvent}
+                        >
+                            Cancel Event
+                        </MDBBtn>
+                        <Link to={"/event/" + this.props.event._id + "/edit"}>
+                            <MDBBtn outline color="warning">
+                                Edit Event
+                            </MDBBtn>
+                        </Link>
+                    </React.Fragment>
                 );
             }
             return null;
@@ -35,7 +71,9 @@ class EventAction extends Component {
                 return (
                     <React.Fragment>
                         <MDBBtn>Join</MDBBtn>
-                        <MDBBtn active={this.state.wish}>{this.state.wish? "Wished" : "Add to wish list"}</MDBBtn>
+                        <MDBBtn active={this.state.wish}>
+                            {this.state.wish ? "Wished" : "Add to wish list"}
+                        </MDBBtn>
                     </React.Fragment>
                 );
             }
