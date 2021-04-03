@@ -1,38 +1,39 @@
-import './App.css';
-import React, { Component } from 'react';
+import "./App.css";
+import React, { Component } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link,
 	Redirect,
-} from 'react-router-dom';
-import { MDBBtn } from 'mdbreact';
-import axios from 'axios';
+} from "react-router-dom";
+import { MDBBtn } from "mdbreact";
+import axios from "axios";
 
-import Authentication from './pages/Authentication.jsx';
-import Event from './pages/Event.jsx';
-import EventFeedback from './pages/EventFeedback.jsx';
-import EventForm from './pages/EventForm.jsx';
-import HomePage from './pages/HomePage.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import UserEvents from './pages/UserEvents.jsx';
-import UserProfile from './pages/UserProfile.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import Authentication from "./pages/Authentication.jsx";
+import Event from "./pages/Event.jsx";
+import EventFeedback from "./pages/EventFeedback.jsx";
+import EventForm from "./pages/EventForm.jsx";
+import EventFormEdit from "./pages/EventFormEdit.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import UserEvents from "./pages/UserEvents.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
-import Header from './components/Header.jsx';
-import HeaderPublic from './components/HeaderPublic.jsx';
-import Footer from './components/Footer.jsx';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
-import PublicRoute from './components/PublicRoute.jsx';
+import Header from "./components/Header.jsx";
+import HeaderPublic from "./components/HeaderPublic.jsx";
+import Footer from "./components/Footer.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import PublicRoute from "./components/PublicRoute.jsx";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isAuthenticated: null,
-			token: '',
+			token: "",
 			user: null,
 		};
 		this.handleLogout = this.handleLogout.bind(this);
@@ -42,7 +43,7 @@ class App extends Component {
 	// Check if user is login when page load
 	componentDidMount() {
 		// Retrieve token from local storage
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem("token");
 		if (token) {
 			// Check validity of token
 			axios
@@ -58,8 +59,9 @@ class App extends Component {
 					});
 				})
 				.catch((err) => {
-                    localStorage.removeItem('token'); // remove invalid token
-                    this.handleLogout();
+
+             this.handleLogout();
+
 				});
 		} else {
 			this.setState({ isAuthenticated: false });
@@ -68,12 +70,12 @@ class App extends Component {
 
 	// Log user out if click on logout button or token invalid
 	handleLogout() {
-		localStorage.removeItem('token');
-		this.setState({ isAuthenticated: false, token: '', user: null });
+		localStorage.removeItem("token");
+		this.setState({ isAuthenticated: false, token: "", user: null });
 	}
 
 	handleLogin(token, user) {
-		localStorage.setItem('token', token);
+		localStorage.setItem("token", token);
 		this.setState({ isAuthenticated: true, token: token, user: user });
 	}
 
@@ -90,68 +92,77 @@ class App extends Component {
 						<Switch>
 							<PublicRoute
 								exact
-								path='/'
+								path="/"
 								isAuthenticated={this.state.isAuthenticated}
 								component={Authentication}
 							/>
 							<PublicRoute
 								exact
-								path='/login'
+								path="/login"
 								isAuthenticated={this.state.isAuthenticated}
 								component={Login}
 								handleLogin={this.handleLogin}
 							/>
 							<PublicRoute
 								exact
-								path='/register'
+								path="/register"
 								isAuthenticated={this.state.isAuthenticated}
 								component={Register}
 								handleLogin={this.handleLogin}
 							/>
 							<ProtectedRoute
 								exact
-								path='/home'
+								path="/home"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={HomePage}
 							/>
 							<ProtectedRoute
 								exact
-								path='/event/form'
+								path="/event/form"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={EventForm}
 							/>
+
 							<ProtectedRoute
 								exact
-								path='/event/:id'
+								path="/event/edit/:id"
+								isAuthenticated={this.state.isAuthenticated}
+								handleLogout={this.handleLogout}
+								component={EventFormEdit}
+							/>
+
+							<ProtectedRoute
+								exact
+								path="/event/:id"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={Event} user={this.state.user}
 							/>
 							<ProtectedRoute
 								exact
-								path='/profile'
+								path="/profile"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={UserProfile}
 							/>
 							<ProtectedRoute
 								exact
-								path='/user/events'
+								path="/user/events"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={UserEvents}
 							/>
 							<ProtectedRoute
 								exact
-								path='/feedback/:id'
+								path="/feedback/:id"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={EventFeedback}
 							/>
-							<Route exact path='/404' component={NotFoundPage} />
-							<Redirect to='/404' />
+							<Route exact path="/404" component={NotFoundPage} />
+							<Redirect to="/404" />
 						</Switch>
 					</main>
 					<Footer />
