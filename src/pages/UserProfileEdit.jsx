@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
-import axios from "axios";
+import React, { Component } from 'react';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import axios from 'axios';
 
 class UserProfileEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "",
-			username: "",
-			image: "",
+			email: '',
+			username: '',
+			image: '',
 			interests: [],
 		};
 		this.handleChange = this.handleChange.bind(this);
@@ -17,7 +17,7 @@ class UserProfileEdit extends Component {
 
 	componentDidMount() {
 		// retrieve token from local storage
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem('token');
 
 		// get user profile
 		axios
@@ -36,56 +36,72 @@ class UserProfileEdit extends Component {
 	}
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state.userProfile);
+
+		const token = localStorage.getItem('token');
+		const data = {
+			email: this.state.email,
+			username: this.state.username,
+			image: this.state.image,
+		};
+		axios
+			.put(`${process.env.REACT_APP_API_URL}/users/profile`, data, {
+				headers: { authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				alert('User profile updated successfully');
+			})
+			.catch((err) => {
+				alert(err);
+			});
 	}
 
 	render() {
 		return (
 			<React.Fragment>
-				<MDBContainer className="mt-5">
-					<p className="h4 text-center mb-4">Update My Profile</p>
+				<MDBContainer className='mt-5'>
+					<p className='h4 text-center mb-4'>Update My Profile</p>
 
 					<form onSubmit={this.handleSubmit}>
 						<MDBRow>
-							<MDBCol size="6">
-								<label htmlFor="email" className="grey-text">
+							<MDBCol size='6'>
+								<label htmlFor='email' className='grey-text'>
 									Email:
 								</label>
 								<input
-									type="text"
-									className="form-control"
-									id="email"
+									type='text'
+									className='form-control'
+									id='email'
 									value={this.state.email}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
-							<MDBCol size="6">
-								<label htmlFor="username" className="grey-text">
+							<MDBCol size='6'>
+								<label htmlFor='username' className='grey-text'>
 									Username
 								</label>
 								<input
-									type="text"
-									className="form-control"
-									id="username"
+									type='text'
+									className='form-control'
+									id='username'
 									value={this.state.username}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
 						</MDBRow>
 						<br />
-						<label htmlFor="image" className="grey-text">
+						<label htmlFor='image' className='grey-text'>
 							Image:
 						</label>
 						<input
-							type="text"
-							className="form-control"
-							id="image"
+							type='text'
+							className='form-control'
+							id='image'
 							value={this.state.image}
 							onChange={this.handleChange}
 						/>
 
-						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+						<div className='text-center mt-4'>
+							<MDBBtn color='blue' outline type='submit'>
 								Update
 							</MDBBtn>
 						</div>
