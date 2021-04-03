@@ -60,7 +60,9 @@ class App extends Component {
 					});
 				})
 				.catch((err) => {
-					localStorage.removeItem("token"); // remove invalid token
+
+             this.handleLogout();
+
 				});
 		} else {
 			this.setState({ isAuthenticated: false });
@@ -137,7 +139,7 @@ class App extends Component {
 								path="/event/:id"
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
-								component={Event}
+								component={Event} user={this.state.user}
 							/>
 
 							<ProtectedRoute
