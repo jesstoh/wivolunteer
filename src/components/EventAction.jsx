@@ -2,6 +2,12 @@ import { MDBBtn, MDBRow } from "mdbreact";
 import React, { Component } from "react";
 
 class EventAction extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            wish: this.props.user.interestedEvents.includes(this.props.event._id)
+        }
+    }
     render() {
         if (this.props.user._id === this.props.event.organiser._id) {
             //////ORGANISER ACTION//////
@@ -29,7 +35,7 @@ class EventAction extends Component {
                 return (
                     <React.Fragment>
                         <MDBBtn>Join</MDBBtn>
-                        <MDBBtn>Wish</MDBBtn>
+                        <MDBBtn active={this.state.wish}>{this.state.wish? "Wished" : "Add to wish list"}</MDBBtn>
                     </React.Fragment>
                 );
             }
