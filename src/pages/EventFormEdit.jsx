@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 class EventForm extends Component {
@@ -20,7 +21,22 @@ class EventForm extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handelChangeCheckbox = this.handelChangeCheckbox.bind(this);
 	}
-	componentDidMount() {}
+	componentDidMount() {
+		// get token from localStorage
+		const token = localStorage.getItem("token");
+		// get id from url params
+		const id = this.props.match.params.id;
+
+		axios
+			.get(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+				headers: { authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				console.log(response.data);
+				this.setState(response.data);
+			});
+	}
+
 	handleChange(event) {
 		this.setState({ [event.target.id]: event.target.value });
 	}
@@ -58,6 +74,7 @@ class EventForm extends Component {
 			})
 			.then((response) => {
 				alert("Event Updated");
+				return <Redirect to={`event/${id}`} />;
 			})
 			.catch((err) => {
 				alert(err);
@@ -71,7 +88,7 @@ class EventForm extends Component {
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
 					<form onSubmit={this.handleSubmit}>
-						<p className="h4 text-center mb-4">Create an Event</p>
+						<p className="h4 text-center mb-4">Edit Event</p>
 
 						<label htmlFor="eventTitle" className="grey-text">
 							Event Title
@@ -257,7 +274,7 @@ class EventForm extends Component {
 
 						<div className="text-center mt-4">
 							<MDBBtn color="blue" outline type="submit">
-								Create Event
+								Update Event
 							</MDBBtn>
 						</div>
 					</form>

@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
-import axios from 'axios';
+import React, { Component } from "react";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
 		// set initial state of form data
 		this.initialState = {
-			eventTitle: '',
-			dateTime: '',
+			eventTitle: "",
+			dateTime: "",
 			limit: 1,
-			location: '',
-			zipCode: '',
-			description: '',
-			image: '',
+			location: "",
+			zipCode: "",
+			description: "",
+			image: "",
 			eventType: [],
 		};
 		// set as initial state
@@ -50,7 +51,7 @@ class EventForm extends Component {
 		// set data state
 		const data = this.state;
 		// get token from localStorage
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem("token");
 
 		// create event
 		axios
@@ -58,7 +59,9 @@ class EventForm extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				alert('Event Created');
+				alert("Event Created, Redirecting to My Events");
+				axios.get();
+				return <Redirect to="/user/events" />;
 			})
 			.catch((err) => {
 				alert(err);
@@ -70,45 +73,45 @@ class EventForm extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<MDBContainer className='mt-5 mb-5' size='lg'>
+				<MDBContainer className="mt-5 mb-5" size="lg">
 					<form onSubmit={this.handleSubmit}>
-						<p className='h4 text-center mb-4'>Create an Event</p>
+						<p className="h4 text-center mb-4">Create an Event</p>
 
-						<label htmlFor='eventTitle' className='grey-text'>
+						<label htmlFor="eventTitle" className="grey-text">
 							Event Title
 						</label>
 						<input
-							type='text'
-							className='form-control'
-							id='eventTitle'
+							type="text"
+							className="form-control"
+							id="eventTitle"
 							value={this.state.eventTitle}
 							onChange={this.handleChange}
 						/>
 						<br />
 
 						<MDBRow>
-							<MDBCol size='6'>
-								<label htmlFor='dateTime' className='grey-text'>
+							<MDBCol size="6">
+								<label htmlFor="dateTime" className="grey-text">
 									Date/Time:
 								</label>
 								<input
-									type='datetime-local'
-									className='form-control'
-									id='dateTime'
+									type="datetime-local"
+									className="form-control"
+									id="dateTime"
 									value={this.state.dateTime}
 									onChange={this.handleChange}
 								/>
 								<br />
 							</MDBCol>
-							<MDBCol size='6'>
-								<label htmlFor='limit' className='grey-text'>
+							<MDBCol size="6">
+								<label htmlFor="limit" className="grey-text">
 									Participant Limit:
 								</label>
 								<input
-									type='number'
-									className='form-control'
-									id='limit'
-									min='1'
+									type="number"
+									className="form-control"
+									id="limit"
+									min="1"
 									value={this.state.limit}
 									onChange={this.handleChange}
 								/>
@@ -118,26 +121,26 @@ class EventForm extends Component {
 
 						<br />
 						<MDBRow>
-							<MDBCol size='6'>
-								<label htmlFor='location' className='grey-text'>
+							<MDBCol size="6">
+								<label htmlFor="location" className="grey-text">
 									Location:
 								</label>
 								<input
-									type='text'
-									className='form-control'
-									id='location'
+									type="text"
+									className="form-control"
+									id="location"
 									value={this.state.location}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
-							<MDBCol size='6'>
-								<label htmlFor='zipCode' className='grey-text'>
+							<MDBCol size="6">
+								<label htmlFor="zipCode" className="grey-text">
 									Postal Code:
 								</label>
 								<input
-									type='text'
-									className='form-control'
-									id='zipCode'
+									type="text"
+									className="form-control"
+									id="zipCode"
 									value={this.state.zipCode}
 									onChange={this.handleChange}
 								/>
@@ -147,55 +150,55 @@ class EventForm extends Component {
 						<br />
 
 						<div>
-							<label htmlFor='description' className='grey-text'>
+							<label htmlFor="description" className="grey-text">
 								Event Description:
 							</label>
 							<textarea
-								type='text'
-								id='description'
-								className='form-control'
-								rows='3'
+								type="text"
+								id="description"
+								className="form-control"
+								rows="3"
 								value={this.state.description}
 								onChange={this.handleChange}
 							/>
 						</div>
 						<br />
 						<MDBRow>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='humanitarian'
+										type="checkbox"
+										class="custom-control-input"
+										id="humanitarian"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='humanitarian'>
+									<label class="custom-control-label" for="humanitarian">
 										Humanitarian
 									</label>
 								</div>
 							</MDBCol>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='environment'
+										type="checkbox"
+										class="custom-control-input"
+										id="environment"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='environment'>
+									<label class="custom-control-label" for="environment">
 										Environment
 									</label>
 								</div>
 							</MDBCol>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='animal-welfare'
+										type="checkbox"
+										class="custom-control-input"
+										id="animal-welfare"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='animal-welfare'>
+									<label class="custom-control-label" for="animal-welfare">
 										Animal-Welfare
 									</label>
 								</div>
@@ -203,41 +206,41 @@ class EventForm extends Component {
 						</MDBRow>
 						<br />
 						<MDBRow>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='community'
+										type="checkbox"
+										class="custom-control-input"
+										id="community"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='community'>
+									<label class="custom-control-label" for="community">
 										Community
 									</label>
 								</div>
 							</MDBCol>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='disability'
+										type="checkbox"
+										class="custom-control-input"
+										id="disability"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='disability'>
+									<label class="custom-control-label" for="disability">
 										Disability
 									</label>
 								</div>
 							</MDBCol>
-							<MDBCol size='4'>
-								<div class='custom-control custom-checkbox'>
+							<MDBCol size="4">
+								<div class="custom-control custom-checkbox">
 									<input
-										type='checkbox'
-										class='custom-control-input'
-										id='health'
+										type="checkbox"
+										class="custom-control-input"
+										id="health"
 										onChange={this.handelChangeCheckbox}
 									/>
-									<label class='custom-control-label' for='health'>
+									<label class="custom-control-label" for="health">
 										Health
 									</label>
 								</div>
@@ -245,13 +248,13 @@ class EventForm extends Component {
 						</MDBRow>
 
 						<br />
-						<label htmlFor='image' className='grey-text'>
+						<label htmlFor="image" className="grey-text">
 							Image:
 						</label>
 						<input
-							type='text'
-							className='form-control'
-							id='image'
+							type="text"
+							className="form-control"
+							id="image"
 							value={this.state.image}
 							onChange={this.handleChange}
 						/>
@@ -272,8 +275,8 @@ class EventForm extends Component {
 							</div>
 						</div> */}
 
-						<div className='text-center mt-4'>
-							<MDBBtn color='blue' outline type='submit'>
+						<div className="text-center mt-4">
+							<MDBBtn color="blue" outline type="submit">
 								Create Event
 							</MDBBtn>
 						</div>
