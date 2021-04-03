@@ -127,7 +127,7 @@ class App extends Component {
 								path='/event/:id'
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
-								component={Event}
+								component={Event} user={this.state.user}
 							/>
 							<ProtectedRoute
 								exact
