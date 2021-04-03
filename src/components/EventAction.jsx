@@ -14,6 +14,8 @@ class EventAction extends Component {
         this.cancelEvent = this.cancelEvent.bind(this);
         this.deleteEvent = this.deleteEvent.bind(this);
         this.joinEvent = this.joinEvent.bind(this);
+        this.dropEvent = this.dropEvent.bind(this);
+        this.toggleWish = this.toggleWish.bind(this);
     }
 
     // Organizer cancel event
@@ -73,6 +75,53 @@ class EventAction extends Component {
             });
     }
 
+    // Quit event
+    dropEvent() {
+        const token = localStorage.getItem("token");
+        axios
+            .put(
+                `${process.env.REACT_APP_API_URL}/events/${this.props.event._id}/drop`,
+                {},
+                {
+                    headers: { authorization: `Bearer ${token}` },
+                }
+            )
+            .then((response) => this.props.fetchEvent())
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    this.props.handleLogout();
+                }
+            });
+    }
+
+    // Add or remove from wish list based on current wish list status
+    toggleWish() {
+        const token = localStorage.getItem("token");
+
+        // Get url param whether to add or remove from wish list
+        let wishStatus = "interested";
+        if (this.state.wish) {
+            wishStatus = "uninterested";
+        }
+        axios
+            .put(
+                `${process.env.REACT_APP_API_URL}/events/${this.props.event._id}/${wishStatus}`,
+                {},
+                {
+                    headers: { authorization: `Bearer ${token}` },
+                }
+            )
+            .then((response) => {
+                this.props.fetchEvent();
+                this.setState({wish: !this.state.wish});
+            })
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    this.props.handleLogout();
+                }
+            });
+    }
+
     render() {
         // Check if anyone already join or show interest to the event
         const noInterest =
@@ -123,7 +172,11 @@ class EventAction extends Component {
                 )
             ) {
                 // Action to un-join event
-                return <MDBBtn onClick={this.dropEvent}>Not Going</MDBBtn>;
+                return (
+                    <MDBBtn onClick={this.dropEvent} color="warning">
+                        <MDBIcon icon="times" size="lg" /> Not Going
+                    </MDBBtn>
+                );
             } else {
                 // Action to join event or add to wish list
                 return (
@@ -131,8 +184,12 @@ class EventAction extends Component {
                         <MDBBtn onClick={this.joinEvent}>
                             <MDBIcon icon="check" size="lg" /> Join
                         </MDBBtn>
-                        <MDBBtn active={this.state.wish}>
-                            {this.state.wish ? "Wished" : "Add to wish list"}
+                        <MDBBtn
+                            active={this.state.wish}
+                            onClick={this.toggleWish}
+                        >
+                            <MDBIcon icon="heart" size="lg" />
+                            {this.state.wish ? " Wished" : " Add to wish list"}
                         </MDBBtn>
                     </React.Fragment>
                 );
