@@ -179,7 +179,7 @@ class EventAction extends Component {
             ) {
                 // Action to un-join event
                 return (
-                    <MDBBtn onClick={this.dropEvent} color="warning">
+                    <MDBBtn onClick={this.dropEvent} color="warning" className="btn-rounded">
                         <MDBIcon icon="times" size="lg" /> Not Going
                     </MDBBtn>
                 );
@@ -191,16 +191,16 @@ class EventAction extends Component {
                         this.props.event.limit ? (
                             <MDBBtn disabled color="blue-grey">Full</MDBBtn>
                         ) : (
-                            <MDBBtn onClick={this.joinEvent}>
+                            <MDBBtn onClick={this.joinEvent} className="btn-rounded"> 
                                 <MDBIcon icon="check" size="lg" /> Join
                             </MDBBtn>
                         )}
                         <MDBBtn
-                            active={this.state.wish}
-                            onClick={this.toggleWish}
+                
+                            onClick={this.toggleWish} color="white"
                         >
-                            <MDBIcon icon="heart" size="lg" />
-                            {this.state.wish ? " Wished" : " Add to wish list"}
+                            
+                            {this.state.wish ? <MDBIcon icon="heart" size="lg" className="red-text" > Wished </MDBIcon>: <MDBIcon far icon="heart" size="lg" className="black-text">Add to wish list</MDBIcon>}
                         </MDBBtn>
                     </React.Fragment>
                 );
