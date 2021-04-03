@@ -32,6 +32,9 @@ class EventForm extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
+				// format date to display in dateTime input
+				response.data.dateTime = response.data.dateTime.split(".")[0];
+				// set data as state
 				this.setState(response.data);
 			});
 	}
@@ -39,6 +42,7 @@ class EventForm extends Component {
 	handleChange(event) {
 		this.setState({ [event.target.id]: event.target.value });
 	}
+
 	handelChangeCheckbox(event) {
 		const checkBox = event.target;
 		const eventType = this.state.eventType;
@@ -180,6 +184,7 @@ class EventForm extends Component {
 										className="custom-control-input"
 										id="humanitarian"
 										onChange={this.handelChangeCheckbox}
+										defaultChecked={false}
 									/>
 									<label
 										className="custom-control-label"
