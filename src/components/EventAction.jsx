@@ -2,6 +2,7 @@ import axios from "axios";
 import { MDBBtn, MDBRow, MDBIcon } from "mdbreact";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import FeedbackAction from "../components/FeedbackAction.jsx";
 
 class EventAction extends Component {
     constructor(props) {
@@ -162,7 +163,7 @@ class EventAction extends Component {
             //////USER ACTION//////
             // Render feedback action component for past event
             if (new Date(this.props.event.dateTime) < new Date()) {
-                return "Feedback Action";
+                return (<FeedbackAction eventId={this.props.event._id} userId={this.props.user._id}/>)
             }
 
             // Render available user action for on-going event
