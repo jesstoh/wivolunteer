@@ -20,6 +20,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import UserEvents from "./pages/UserEvents.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
+import UserProfileEdit from "./pages/UserProfileEdit.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 import Header from "./components/Header.jsx";
@@ -139,6 +140,14 @@ class App extends Component {
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={Event} user={this.state.user}
+							/>
+
+							<ProtectedRoute
+								exact
+								path="/profile/edit"
+								isAuthenticated={this.state.isAuthenticated}
+								handleLogout={this.handleLogout}
+								component={UserProfileEdit}
 							/>
 							<ProtectedRoute
 								exact

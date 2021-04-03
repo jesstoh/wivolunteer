@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 class EventForm extends Component {
