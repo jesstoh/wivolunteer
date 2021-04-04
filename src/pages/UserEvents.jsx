@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBContainer, MDBTypography, MDBCol, MDBRow } from "mdbreact";
+import { MDBContainer, MDBBtn, MDBCol, MDBRow } from "mdbreact";
 import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
 class UserEvents extends Component {
@@ -21,11 +21,8 @@ class UserEvents extends Component {
 	onClick(event) {
 		event.preventDefault();
 		// set selected events based on clicked tag
-		const selectedEventType = event.target.id;
+		const selectedEventType = event.currentTarget.id;
 		this.setState({ selectedEvents: this.state.userEvents[selectedEventType] });
-		if (!this.selectedEvents.length) {
-			this.setState({ noResultMessage: "No events avaliable to display." });
-		}
 	}
 
 	componentDidMount() {
@@ -44,6 +41,7 @@ class UserEvents extends Component {
 				this.setState({
 					userEvents: data,
 					selectedEvents: data.organizedEvents,
+					noResultMessage: "No events avaliable to display.",
 				});
 			})
 			.catch((err) => {
@@ -58,19 +56,40 @@ class UserEvents extends Component {
 					<h1>My Events</h1>
 					<MDBRow className="mt-4">
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="joinedEvents">Particpated Events</a>
-							</h5>
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="joinedEvents"
+								className="btn-rounded"
+								onClick={this.onClick}
+								rounded
+							>
+								Particpated Events
+							</MDBBtn>
 						</MDBCol>
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="organizedEvents">Organized Events</a>
-							</h5>
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="organizedEvents"
+								className="btn-rounded"
+								onClick={this.onClick}
+								rounded
+							>
+								Organized Events
+							</MDBBtn>
 						</MDBCol>
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="interestedEvents">Interested Events</a>
-							</h5>
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="interestedEvents"
+								className="btn-rounded"
+								onClick={this.onClick}
+								rounded
+							>
+								Interested Events
+							</MDBBtn>
 						</MDBCol>
 					</MDBRow>
 					<br />
