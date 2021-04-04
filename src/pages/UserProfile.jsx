@@ -7,6 +7,7 @@ import {
 	MDBBtn,
 	MDBIcon,
 } from "mdbreact";
+import { Link } from "react-router-dom";
 import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
 class UserProfile extends Component {
@@ -66,20 +67,23 @@ class UserProfile extends Component {
 							? ""
 							: this.state.userProfile.interests.map((interest) => {
 									return (
-										<MDBBadge pill color="primary" className="m-2">
+										<MDBBadge
+											key={interest}
+											pill
+											color="primary"
+											className="m-2"
+										>
 											{interest}
 										</MDBBadge>
 									);
 							  })}
 					</h5>
-
-					<MDBBtn color="blue" outline type="submit" className="mb-4">
-						<a href="/profile/edit">Edit Profile</a>
-					</MDBBtn>
-					<h5>Interested Events</h5>
-					<EventsContainer
-						eventData={this.state.userProfile.interestedEvents}
-					/>
+					<Link to="/profile/edit">
+						<MDBBtn color="blue" outline type="submit" className="mb-4">
+							Edit Profile
+						</MDBBtn>
+					</Link>
+					{/* User event participation/ organisation statistic goes here */}
 				</MDBContainer>
 			</React.Fragment>
 		);
