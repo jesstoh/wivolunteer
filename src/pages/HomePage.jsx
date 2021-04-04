@@ -12,6 +12,7 @@ class HomePage extends Component {
         this.state = {
             date: new Date(),
             all: false, // all events or event of interests
+            search: false, // check if it is search result
             baseURL: `${process.env.REACT_APP_API_URL}/events`,
             url: `${process.env.REACT_APP_API_URL}/events`,
             eventData: null,
@@ -28,11 +29,10 @@ class HomePage extends Component {
                 headers: { authorization: `Bearer ${token}` },
             })
             .then((response) => {
-                this.setState({ eventData: response.data },()=>{
-                    console.log(this.state.eventData)
-                    console.log(this.state.eventData===[])
+                this.setState({ eventData: response.data }, () => {
+                    console.log(this.state.eventData);
+                    console.log(this.state.eventData === []);
                 });
-            
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -67,7 +67,8 @@ class HomePage extends Component {
         if (!event.target.classList.contains("active")) {
             this.setState(
                 {
-                    all: !this.state.all,
+                    all: (event.target.id === "all"),
+                    search: false,
                     url:
                         this.state.baseURL +
                         `${this.state.all ? "" : "/all"}` +
@@ -87,26 +88,29 @@ class HomePage extends Component {
                 <MDBRow>
                     <MDBCol className="pl-4">
                         <MDBBtn
-                            active={!this.state.all}
-                            onClick={this.toggleAll}
-                            className="btn-rounded"
-                            color="blue-grey"
-                        >
-                            Interests
-                        </MDBBtn>
-                        <MDBBtn
                             active={this.state.all}
                             onClick={this.toggleAll}
                             className="btn-rounded"
-                            color="blue-grey"
+                            id="all"
+                            color="light-blue"
+                            size="sm"
                         >
                             All
+                        </MDBBtn>
+                        <MDBBtn
+                            active={!this.state.all && !this.state.search}
+                            onClick={this.toggleAll}
+                            className="btn-rounded"
+                            color="light-blue"
+                            size="sm"
+                        >
+                            Interests
                         </MDBBtn>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow className="pt-5">
                     <MDBCol md="7" lg="8">
-                        {!this.state.eventData? null : (
+                        {!this.state.eventData ? null : (
                             <EventsContainer eventData={this.state.eventData} />
                         )}
                     </MDBCol>
