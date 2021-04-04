@@ -88,7 +88,7 @@ class HomePage extends Component {
                     search: false,
                     url:
                         this.state.baseURL +
-                        `${this.state.all ? "" : "/all"}` +
+                        `${event.target.id !== "all" ? "" : "/all"}` +
                         `/?date=${this.state.date.toISOString()}`,
                 },
                 () => {
