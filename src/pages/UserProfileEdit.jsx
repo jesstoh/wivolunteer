@@ -6,12 +6,14 @@ class UserProfileEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "",
-			interests: [],
-			username: "",
-			image: "",
-			contact: "",
-			address: "",
+			userProfile: {
+				email: "",
+				interests: [],
+				username: "",
+				image: "",
+				contact: "",
+				address: "",
+			},
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,23 +30,26 @@ class UserProfileEdit extends Component {
 			})
 			.then((response) => {
 				// set fetched profile as state
-				this.setState(response.data);
+				this.setState({ userProfile: response.data });
 			});
 	}
 
 	handleChange(event) {
 		event.preventDefault();
-		this.setState({ [event.target.id]: event.target.value });
+		console.log(this.state.userProfile);
+		// update userProfile based on event target id
+		this.setState({
+			userProfile: {
+				...this.state.userProfile,
+				[event.target.id]: event.target.value,
+			},
+		});
 	}
 	handleSubmit(event) {
 		event.preventDefault();
 
 		const token = localStorage.getItem("token");
-		const data = {
-			email: this.state.email,
-			username: this.state.username,
-			image: this.state.image,
-		};
+		const data = this.state.userProfile;
 		axios
 			.put(`${process.env.REACT_APP_API_URL}/users/profile`, data, {
 				headers: { authorization: `Bearer ${token}` },
@@ -73,7 +78,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="email"
-									value={this.state.email}
+									value={this.state.userProfile.email}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -85,7 +90,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="username"
-									value={this.state.username}
+									value={this.state.userProfile.username}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -100,7 +105,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="contact"
-									value={this.state.contact}
+									value={this.state.userProfile.contact}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -112,7 +117,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="address"
-									value={this.state.address}
+									value={this.state.userProfile.address}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -125,13 +130,13 @@ class UserProfileEdit extends Component {
 							type="text"
 							className="form-control"
 							id="image"
-							value={this.state.image}
+							value={this.state.userProfile.image}
 							onChange={this.handleChange}
 						/>
 						<br />
 						<label className="grey-text">Image Preview:</label>
 						<img
-							src={this.state.image}
+							src={this.state.userProfile.image}
 							style={{ height: "150px", width: "150px", objectFit: "cover" }}
 							className="rounded-circle img-thumbnail mx-auto d-block m-3"
 							alt="profile image"
