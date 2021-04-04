@@ -8,7 +8,7 @@ class UserProfileEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isProfileUpdateSubmitted: false,
+			isFormSubmitted: false,
 			userProfile: {
 				email: "",
 				interests: [],
@@ -58,7 +58,7 @@ class UserProfileEdit extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				this.setState({ isProfileUpdateSubmitted: true });
+				this.setState({ isFormSubmitted: true });
 			})
 			.catch((err) => {
 				alert(err);
@@ -66,7 +66,7 @@ class UserProfileEdit extends Component {
 	}
 
 	render() {
-		if (this.state.isProfileUpdateSubmitted) {
+		if (this.state.isFormSubmitted) {
 			return <Redirect to="/profile" />;
 		}
 
