@@ -48,7 +48,8 @@ class UserProfile extends Component {
 						<MDBCol>
 							<img
 								src={this.state.userProfile.image}
-								className="rounded-circle mx-auto d-block m-3"
+								style={{ height: "150px", width: "150px", objectFit: "cover" }}
+								className="rounded-circle img-thumbnail mx-auto d-block m-3"
 								alt="profile image"
 							/>
 						</MDBCol>
