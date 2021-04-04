@@ -76,7 +76,7 @@ class EventForm extends Component {
 		if (this.state.isFormSubmitted) {
 			return <Redirect to={`/event/${this.state.eventID}`} />;
 		}
-
+		console.log(new Date().toISOString());
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
@@ -105,6 +105,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="dateTime"
 									value={this.state.formData.dateTime}
+									min={new Date().toISOString().split(".")[0]}
 									onChange={this.handleChange}
 								/>
 								<br />
