@@ -7,6 +7,7 @@ import {
 	MDBBtn,
 	MDBIcon,
 } from "mdbreact";
+import { Link } from "react-router-dom";
 import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
 class UserProfile extends Component {
@@ -19,6 +20,8 @@ class UserProfile extends Component {
 				interests: [],
 				username: "",
 				image: "",
+				contact: "",
+				address: "",
 			},
 		};
 	}
@@ -39,6 +42,7 @@ class UserProfile extends Component {
 	}
 
 	render() {
+		console.log(this.state.userProfile);
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-4 text-center">
@@ -47,7 +51,8 @@ class UserProfile extends Component {
 						<MDBCol>
 							<img
 								src={this.state.userProfile.image}
-								className="rounded-circle mx-auto d-block m-3"
+								style={{ height: "150px", width: "150px", objectFit: "cover" }}
+								className="rounded-circle img-thumbnail mx-auto d-block m-3"
 								alt="profile image"
 							/>
 						</MDBCol>
@@ -59,6 +64,14 @@ class UserProfile extends Component {
 					<h5>
 						<MDBIcon icon="envelope" className="mr-3" />
 						{this.state.userProfile.email}
+
+						<MDBIcon icon="phone" className="mr-2 ml-2" />
+						{this.state.userProfile.contact}
+					</h5>
+
+					<h5>
+						<MDBIcon icon="map-marked" className="mr-3" />
+						{this.state.userProfile.address}
 					</h5>
 					<h5>
 						<span>Interests: </span>
@@ -66,20 +79,23 @@ class UserProfile extends Component {
 							? ""
 							: this.state.userProfile.interests.map((interest) => {
 									return (
-										<MDBBadge pill color="primary" className="m-2">
+										<MDBBadge
+											key={interest}
+											pill
+											color="primary"
+											className="m-2"
+										>
 											{interest}
 										</MDBBadge>
 									);
 							  })}
 					</h5>
-
-					<MDBBtn color="blue" outline type="submit" className="mb-4">
-						<a href="/profile/edit">Edit Profile</a>
-					</MDBBtn>
-					<h5>Interested Events</h5>
-					<EventsContainer
-						eventData={this.state.userProfile.interestedEvents}
-					/>
+					<Link to="/profile/edit">
+						<MDBBtn color="blue" outline type="submit" className="mb-4">
+							Edit Profile
+						</MDBBtn>
+					</Link>
+					<h5>User event participation/organisation stats charts goes here</h5>
 				</MDBContainer>
 			</React.Fragment>
 		);
