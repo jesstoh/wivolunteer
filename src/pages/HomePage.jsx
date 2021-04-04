@@ -147,7 +147,7 @@ class HomePage extends Component {
         return (
             <MDBContainer className="pt-4">
                 <MDBRow>
-                    <MDBCol md="7" lg="8" className="pl-4">
+                    <MDBCol sm="5" md="5" className="pl-4">
                         <Select
                             options={this.options}
                             className=""
@@ -155,6 +155,8 @@ class HomePage extends Component {
                             isMulti
                             onChange={this.handleSelect}
                         />
+                    </MDBCol>
+                    <MDBCol sm="1">
                         <MDBBtn
                             size="sm"
                             type="submit"
@@ -166,31 +168,42 @@ class HomePage extends Component {
                         </MDBBtn>
                     </MDBCol>
                 </MDBRow>
-                <MDBRow className="pt-5">
-                    <MDBCol className="pl-4">
-                        <MDBBtn
-                            active={this.state.all}
-                            onClick={this.toggleAll}
-                            className="btn-rounded"
-                            id="all"
-                            color="light-blue"
-                            size="sm"
-                        >
-                            All
-                        </MDBBtn>
-                        <MDBBtn
-                            active={!this.state.all && !this.state.search}
-                            onClick={this.toggleAll}
-                            className="btn-rounded"
-                            color="light-blue"
-                            size="sm"
-                        >
-                            Interests
-                        </MDBBtn>
-                    </MDBCol>
-                </MDBRow>
+
                 <MDBRow className="pt-4">
+                    <MDBCol md="5" lg="4" className="pt-5 order-sm-last mb-5">
+                        <Calendar
+                            className="mx-auto mt-3"
+                            minDate={new Date()}
+                            value={this.state.date}
+                            onChange={this.dateChange}
+                        />
+                    </MDBCol>
                     <MDBCol md="7" lg="8">
+                        <MDBRow className="pb-2">
+                            <MDBCol className="pl-4">
+                                <MDBBtn
+                                    active={this.state.all}
+                                    onClick={this.toggleAll}
+                                    className="btn-rounded"
+                                    id="all"
+                                    color="light-blue"
+                                    size="sm"
+                                >
+                                    All
+                                </MDBBtn>
+                                <MDBBtn
+                                    active={
+                                        !this.state.all && !this.state.search
+                                    }
+                                    onClick={this.toggleAll}
+                                    className="btn-rounded"
+                                    color="light-blue"
+                                    size="sm"
+                                >
+                                    Interests
+                                </MDBBtn>
+                            </MDBCol>
+                        </MDBRow>
                         {!this.state.eventData ? null : (
                             <EventsContainer
                                 eventData={this.state.eventData}
@@ -198,14 +211,6 @@ class HomePage extends Component {
                                 message={this.state.message}
                             />
                         )}
-                    </MDBCol>
-                    <MDBCol md="5" lg="4">
-                        <Calendar
-                            className="mx-auto"
-                            minDate={new Date()}
-                            value={this.state.date}
-                            onChange={this.dateChange}
-                        />
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
