@@ -20,6 +20,8 @@ class UserProfile extends Component {
 				interests: [],
 				username: "",
 				image: "",
+				contact: "",
+				address: "",
 			},
 		};
 	}
@@ -40,6 +42,7 @@ class UserProfile extends Component {
 	}
 
 	render() {
+		console.log(this.state.userProfile);
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-4 text-center">
@@ -61,6 +64,14 @@ class UserProfile extends Component {
 					<h5>
 						<MDBIcon icon="envelope" className="mr-3" />
 						{this.state.userProfile.email}
+
+						<MDBIcon icon="phone" className="mr-2 ml-2" />
+						{this.state.userProfile.contact}
+					</h5>
+
+					<h5>
+						<MDBIcon icon="map-marked" className="mr-3" />
+						{this.state.userProfile.address}
 					</h5>
 					<h5>
 						<span>Interests: </span>
@@ -84,7 +95,7 @@ class UserProfile extends Component {
 							Edit Profile
 						</MDBBtn>
 					</Link>
-					{/* User event participation/ organisation statistic goes here */}
+					<h5>User event participation/organisation stats charts goes here</h5>
 				</MDBContainer>
 			</React.Fragment>
 		);
