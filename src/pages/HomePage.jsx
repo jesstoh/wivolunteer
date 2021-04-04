@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBFormInline } from "mdbreact";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
-
+import Select from "react-select";
 import EventsContainer from "../components/EventsContainer.jsx";
 
 class HomePage extends Component {
@@ -13,12 +13,22 @@ class HomePage extends Component {
             date: new Date(),
             all: false, // all events or event of interests
             search: false, // check if it is search result
+            searchValue: [],
             baseURL: `${process.env.REACT_APP_API_URL}/events`,
             url: `${process.env.REACT_APP_API_URL}/events`,
             eventData: null,
         };
+        this.options = [
+            { value: "humanitarian", label: "Humanitarian" },
+            { value: "environment", label: "Environment" },
+            { value: "animal-welfare", label: "Animal-Welfare" },
+            { value: "community", label: "Community" },
+            { value: "disability", label: "Disability" },
+            { value: "health", label: "Health" },
+        ];
         this.dateChange = this.dateChange.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     // Fetch event data
@@ -62,12 +72,18 @@ class HomePage extends Component {
         );
     }
 
+    // Handle search multiple select
+    handleSelect(selectedValue) {
+        this.setState({searchValue: selectedValue});
+        console.log(selectedValue)
+    }
+
     // Toggle interest or all buttons, to show all or event of interest
     toggleAll(event) {
         if (!event.target.classList.contains("active")) {
             this.setState(
                 {
-                    all: (event.target.id === "all"),
+                    all: event.target.id === "all",
                     search: false,
                     url:
                         this.state.baseURL +
@@ -84,8 +100,28 @@ class HomePage extends Component {
     render() {
         return (
             <MDBContainer className="pt-4">
-                <MDBRow>Search Bar</MDBRow>
                 <MDBRow>
+                    <MDBCol md="7" lg="8" className="pl-4">
+                        {/* <MDBFormInline className="md-form mr-auto m-0"> */}
+                        <Select options = {this.options} className="" value={this.state.searchValue} isMulti onChange={this.handleSelect}/>
+                            {/* <input
+                                className="form-control mr-sm-2"
+                                type="text"
+                                placeholder="Search"
+                                aria-label="Search"
+                            /> */}
+                            <MDBBtn
+                                size="sm"
+                                type="submit"
+                                className="mr-auto"
+                                gradient="aqua"
+                            >
+                                Search
+                            </MDBBtn>
+                        {/* </MDBFormInline> */}
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow className="pt-5">
                     <MDBCol className="pl-4">
                         <MDBBtn
                             active={this.state.all}
@@ -108,7 +144,7 @@ class HomePage extends Component {
                         </MDBBtn>
                     </MDBCol>
                 </MDBRow>
-                <MDBRow className="pt-5">
+                <MDBRow className="pt-4">
                     <MDBCol md="7" lg="8">
                         {!this.state.eventData ? null : (
                             <EventsContainer eventData={this.state.eventData} />
