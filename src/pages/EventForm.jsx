@@ -105,6 +105,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="dateTime"
 									value={this.state.formData.dateTime}
+									min={new Date().toISOString().split(".")[0]}
 									onChange={this.handleChange}
 								/>
 								<br />
