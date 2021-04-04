@@ -128,7 +128,15 @@ class UserProfileEdit extends Component {
 							value={this.state.image}
 							onChange={this.handleChange}
 						/>
-
+						<br />
+						<label className="grey-text">Image Preview:</label>
+						<img
+							src={this.state.image}
+							style={{ height: "150px", width: "150px", objectFit: "cover" }}
+							className="rounded-circle img-thumbnail mx-auto d-block m-3"
+							alt="profile image"
+							onChange={this.handleChange}
+						/>
 						<div className="text-center mt-4">
 							<MDBBtn color="blue" outline type="submit">
 								Update
