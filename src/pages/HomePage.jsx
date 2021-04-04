@@ -57,22 +57,32 @@ class HomePage extends Component {
 
     componentDidMount() {
         // Fetch events of interests based on date today
-        this.fetchData();
+        this.fetchData(this.state.message, this.state.noResultMessage);
     }
 
     // Handle date change on calendar
     dateChange(value, event) {
+        let newURL = "";
+        // Generate url of search
+        if (this.state.search) {
+            const searchCat = this.state.searchValue.map((ele) => ele.value);
+            const cat = JSON.stringify(searchCat);
+            newURL =
+                this.state.baseURL +
+                `/find/?cat=${cat}&date=${value.toISOString()}`;
+        } else {
+            newURL =
+                this.state.baseURL +
+                `${this.state.all ? "/all" : ""}` +
+                `/?date=${value.toISOString()}`;
+        }
         this.setState(
             {
                 date: value,
-                url:
-                    this.state.baseURL +
-                    `${this.state.all ? "/all" : ""}` +
-                    `/?date=${value.toISOString()}`,
+                url: newURL,
             },
             () => {
-                this.fetchData("",
-                "No related event found for next 1 month");
+                this.fetchData(this.state.message, this.state.noResultMessage);
             }
         );
     }
@@ -90,7 +100,7 @@ class HomePage extends Component {
                 {
                     all: event.target.id === "all",
                     search: false,
-
+                    searchValue: [],
                     url:
                         this.state.baseURL +
                         `${event.target.id !== "all" ? "" : "/all"}` +
@@ -117,14 +127,18 @@ class HomePage extends Component {
         this.setState(
             {
                 search: true,
-                searchValue: [],
+                all: false,
+                // searchValue: [],
                 url:
                     this.state.baseURL +
                     `/find/?cat=${cat}&date=${this.state.date.toISOString()}`,
             },
             () => {
                 // console.log(this.state.url)
-                this.fetchData(`Search Result for ${searchCat}`, `No Search Result for ${searchCat}`);
+                this.fetchData(
+                    `Search Result for ${searchCat}`,
+                    `No Search Result for ${searchCat} in next 1 month`
+                );
             }
         );
     }
