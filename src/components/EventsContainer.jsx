@@ -5,7 +5,7 @@ import EventCard from './EventCard.jsx';
 class EventsContainer extends Component {
 	render() {
 		return !this.props.eventData.length ? (
-			'No Relevant Event found for next selected 1 month'
+			<div style={{ width: '100%' }}>{this.props.message}</div>
 		) : (
 			<div style={{ width: '100%' }}>
 				{this.props.eventData.map((event) => (
