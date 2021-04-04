@@ -6,6 +6,7 @@ class UserEvents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			noResultMessage: "View your events here.",
 			selectedEvents: [],
 			userEvents: {
 				interestedEvents: [],
@@ -22,6 +23,9 @@ class UserEvents extends Component {
 		// set selected events based on clicked tag
 		const selectedEventType = event.target.id;
 		this.setState({ selectedEvents: this.state.userEvents[selectedEventType] });
+		if (!this.selectedEvents.length) {
+			this.setState({ noResultMessage: "No events avaliable to display." });
+		}
 	}
 
 	componentDidMount() {
@@ -34,8 +38,13 @@ class UserEvents extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				// set user events to state
-				this.setState({ userEvents: response.data });
+				// store fetched data
+				const data = response.data;
+				// set user events into state
+				this.setState({
+					userEvents: data,
+					selectedEvents: data.organizedEvents,
+				});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -69,7 +78,7 @@ class UserEvents extends Component {
 						<MDBCol size="12">
 							<EventsContainer
 								eventData={this.state.selectedEvents}
-								noResultMessage="No events available to display."
+								noResultMessage={this.state.noResultMessage}
 							/>
 						</MDBCol>
 					</MDBRow>
