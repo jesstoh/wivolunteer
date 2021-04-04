@@ -39,7 +39,7 @@ class UserProfileEdit extends Component {
 
 	handleChange(event) {
 		event.preventDefault();
-		console.log(this.state.userProfile);
+
 		// update userProfile based on event target id
 		this.setState({
 			userProfile: {

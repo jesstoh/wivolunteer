@@ -45,13 +45,17 @@ class EventForm extends Component {
 
 	handleChange(event) {
 		this.setState({
-			formData: { ...this.formData, [event.target.id]: event.target.value },
+			formData: {
+				...this.state.formData,
+				[event.target.id]: event.target.value,
+			},
 		});
 	}
 
 	handelChangeCheckbox(event) {
 		const checkBox = event.target;
 		const eventType = this.state.formData.eventType;
+
 		if (checkBox.checked) {
 			eventType.push(checkBox.id);
 			this.setState(eventType);
