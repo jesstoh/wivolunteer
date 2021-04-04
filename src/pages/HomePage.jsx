@@ -29,6 +29,7 @@ class HomePage extends Component {
         this.dateChange = this.dateChange.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     // Fetch event data
@@ -74,8 +75,8 @@ class HomePage extends Component {
 
     // Handle search multiple select
     handleSelect(selectedValue) {
-        this.setState({searchValue: selectedValue});
-        console.log(selectedValue)
+        this.setState({ searchValue: selectedValue });
+        // console.log(selectedValue)
     }
 
     // Toggle interest or all buttons, to show all or event of interest
@@ -97,28 +98,50 @@ class HomePage extends Component {
         }
     }
 
+    // Fetch search result
+    handleSearch(event) {
+        event.preventDefault();
+        // convert to query string
+        const cat = JSON.stringify(
+            this.state.searchValue.map((ele) => ele.value)
+        );
+        console.log(cat);
+        this.setState(
+            {
+                search: true,
+                searchValue: [],
+                url:
+                    this.state.baseURL +
+                    `/find/?cat=${cat}&date=${this.state.date.toISOString()}`,
+            },
+            () => {
+                console.log(this.state.url)
+                this.fetchData();
+            }
+        );
+    }
+
     render() {
         return (
             <MDBContainer className="pt-4">
                 <MDBRow>
                     <MDBCol md="7" lg="8" className="pl-4">
-                        {/* <MDBFormInline className="md-form mr-auto m-0"> */}
-                        <Select options = {this.options} className="" value={this.state.searchValue} isMulti onChange={this.handleSelect}/>
-                            {/* <input
-                                className="form-control mr-sm-2"
-                                type="text"
-                                placeholder="Search"
-                                aria-label="Search"
-                            /> */}
-                            <MDBBtn
-                                size="sm"
-                                type="submit"
-                                className="mr-auto"
-                                gradient="aqua"
-                            >
-                                Search
-                            </MDBBtn>
-                        {/* </MDBFormInline> */}
+                        <Select
+                            options={this.options}
+                            className=""
+                            value={this.state.searchValue}
+                            isMulti
+                            onChange={this.handleSelect}
+                        />
+                        <MDBBtn
+                            size="sm"
+                            type="submit"
+                            className="mr-auto"
+                            gradient="aqua"
+                            onClick={this.handleSearch}
+                        >
+                            Search
+                        </MDBBtn>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow className="pt-5">
