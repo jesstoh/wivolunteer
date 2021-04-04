@@ -27,7 +27,7 @@ class EventCard extends Component {
                                 }{" "}
                                 <br />
                                 Location: {this.props.event.location} <br />
-                                Type: {this.props.event.eventType} <br />
+                                Type: {this.props.event.eventType.join(", ")} <br />
                                 Participants:{" "}
                                 {this.props.event.participants.length} /{" "}
                                 {this.props.event.limit} Wish:{" "}
