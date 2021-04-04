@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Redirect } from "react-router-dom";
+
 import axios from "axios";
 
 class UserProfileEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isProfileUpdateSubmitted: false,
 			userProfile: {
 				email: "",
 				interests: [],
@@ -55,7 +58,7 @@ class UserProfileEdit extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				alert("User profile updated successfully");
+				this.setState({ isProfileUpdateSubmitted: true });
 			})
 			.catch((err) => {
 				alert(err);
@@ -63,6 +66,10 @@ class UserProfileEdit extends Component {
 	}
 
 	render() {
+		if (this.state.isProfileUpdateSubmitted) {
+			return <Redirect to="/profile" />;
+		}
+
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5">
