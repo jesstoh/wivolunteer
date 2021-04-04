@@ -67,7 +67,10 @@ class UserEvents extends Component {
 					<br />
 					<MDBRow>
 						<MDBCol size="12">
-							<EventsContainer eventData={this.state.selectedEvents} />
+							<EventsContainer
+								eventData={this.state.selectedEvents}
+								noResultMessage="No events available to display."
+							/>
 						</MDBCol>
 					</MDBRow>
 				</MDBContainer>
