@@ -171,7 +171,7 @@ class EventAction extends Component {
             if (new Date(this.props.event.dateTime) < new Date()) {
                 return (
                     <FeedbackAction
-                        eventId={this.props.event._id}
+                        eventId={this.props.event._id} eventParticipant={this.props.event.participants}
                         userId={this.props.user._id}
                     />
                 );

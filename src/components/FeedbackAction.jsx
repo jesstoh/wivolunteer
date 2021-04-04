@@ -12,7 +12,6 @@ class FeedbackAction extends Component {
         this.fetchFeedback = this.fetchFeedback.bind(this);
     }
 
-
     // Fetch feedback status
     fetchFeedback() {
         const token = localStorage.getItem("token");
@@ -22,11 +21,14 @@ class FeedbackAction extends Component {
                 { headers: { authorization: `Bearer ${token}` } }
             )
             .then((response) => {
-                console.log(response.data)
-                if (response.data.some(ele => ele.participant._id === this.props.userId)) {
+                console.log(response.data);
+                if (
+                    response.data.some(
+                        (ele) => ele.participant._id === this.props.userId
+                    )
+                ) {
                     this.setState({ feedbackDone: true });
                 }
-                
             })
             .catch((err) => {
                 console.log(err);
@@ -48,13 +50,27 @@ class FeedbackAction extends Component {
     }
 
     render() {
+        // If user never participate in the event
+        if (
+            !this.props.eventParticipant.some(
+                (ele) => ele._id === this.props.userId
+            )
+        ) {
+            return null;
+        }
         return (
             <React.Fragment>
                 {this.state.feedbackDone ? (
-                    <MDBBtn disabled> <MDBIcon icon="edit" size="lg" />Feedback Complete</MDBBtn>
+                    <MDBBtn disabled>
+                        {" "}
+                        <MDBIcon icon="edit" size="lg" />
+                        Feedback Complete
+                    </MDBBtn>
                 ) : (
                     <Link to={"/feedback/" + this.props.eventId}>
-                        <MDBBtn><MDBIcon icon="edit" size="lg" /> Leave a feedback </MDBBtn>
+                        <MDBBtn>
+                            <MDBIcon icon="edit" size="lg" /> Leave a feedback{" "}
+                        </MDBBtn>
                     </Link>
                 )}
             </React.Fragment>
