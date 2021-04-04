@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			eventTitle: "",
-			dateTime: "",
-			limit: 1,
-			location: "",
-			zipCode: "",
-			description: "",
-			image: "",
-			eventType: [],
+			isFormSubmitted: false,
+			eventID: "",
+			formData: {
+				eventTitle: "",
+				dateTime: "",
+				limit: 1,
+				location: "",
+				zipCode: "",
+				description: "",
+				image: "",
+				eventType: [],
+			},
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -24,27 +29,33 @@ class EventForm extends Component {
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 		// get id from url params
-		const id = this.props.match.params.id;
+		this.eventID = this.props.match.params.id;
 
 		axios
-			.get(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+			.get(`${process.env.REACT_APP_API_URL}/events/${this.eventID}`, {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
 				// format date to display in dateTime input
 				response.data.dateTime = response.data.dateTime.split(".")[0];
 				// set data as state
-				this.setState(response.data);
+				this.setState({ formData: response.data });
 			});
 	}
 
 	handleChange(event) {
-		this.setState({ [event.target.id]: event.target.value });
+		this.setState({
+			formData: {
+				...this.state.formData,
+				[event.target.id]: event.target.value,
+			},
+		});
 	}
 
 	handelChangeCheckbox(event) {
 		const checkBox = event.target;
-		const eventType = this.state.eventType;
+		const eventType = this.state.formData.eventType;
+
 		if (checkBox.checked) {
 			eventType.push(checkBox.id);
 			this.setState(eventType);
@@ -62,27 +73,31 @@ class EventForm extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		// set data state
-		const data = this.state;
+		const data = this.state.formData;
 		// get token from localStorage
 		const token = localStorage.getItem("token");
-		// get id from url params
-		const id = this.props.match.params.id;
-
 		// update event
 		axios
-			.put(`${process.env.REACT_APP_API_URL}/events/${id}/edit`, data, {
-				headers: { authorization: `Bearer ${token}` },
-			})
+			.put(
+				`${process.env.REACT_APP_API_URL}/events/${this.eventID}/edit`,
+				data,
+				{
+					headers: { authorization: `Bearer ${token}` },
+				}
+			)
 			.then((response) => {
-				alert("Event Updated");
+				this.setState({ isFormSubmitted: true });
 			})
 			.catch((err) => {
 				alert(err);
 			});
-		this.setState(this.initialState);
 	}
 
 	render() {
+		if (this.state.isFormSubmitted) {
+			return <Redirect to={`/event/${this.eventID}`} />;
+		}
+
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
@@ -96,7 +111,7 @@ class EventForm extends Component {
 							type="text"
 							className="form-control"
 							id="eventTitle"
-							value={this.state.eventTitle}
+							value={this.state.formData.eventTitle}
 							onChange={this.handleChange}
 						/>
 						<br />
@@ -110,7 +125,7 @@ class EventForm extends Component {
 									type="datetime-local"
 									className="form-control"
 									id="dateTime"
-									value={this.state.dateTime}
+									value={this.state.formData.dateTime}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -124,7 +139,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="limit"
 									min="1"
-									value={this.state.limit}
+									value={this.state.formData.limit}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -141,7 +156,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="location"
-									value={this.state.location}
+									value={this.state.formData.location}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -153,7 +168,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="zipCode"
-									value={this.state.zipCode}
+									value={this.state.formData.zipCode}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -170,7 +185,7 @@ class EventForm extends Component {
 								id="description"
 								className="form-control"
 								rows="3"
-								value={this.state.description}
+								value={this.state.formData.description}
 								onChange={this.handleChange}
 							/>
 						</div>
@@ -274,7 +289,7 @@ class EventForm extends Component {
 							type="text"
 							className="form-control"
 							id="image"
-							value={this.state.image}
+							value={this.state.formData.image}
 							onChange={this.handleChange}
 						/>
 

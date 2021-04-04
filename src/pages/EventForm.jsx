@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
-		// set initial state of form data
-		this.initialState = {
-			eventTitle: "",
-			dateTime: "",
-			limit: 1,
-			location: "",
-			zipCode: "",
-			description: "",
-			image: "",
-			eventType: [],
+		this.state = {
+			isFormSubmitted: false,
+			eventID: "",
+			formData: {
+				eventTitle: "",
+				dateTime: "",
+				limit: 1,
+				location: "",
+				zipCode: "",
+				description: "",
+				image: "",
+				eventType: [],
+			},
 		};
-		// set as initial state
-		this.state = this.initialState;
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,11 +27,17 @@ class EventForm extends Component {
 	}
 
 	handleChange(event) {
-		this.setState({ [event.target.id]: event.target.value });
+		this.setState({
+			formData: {
+				...this.state.formData,
+				[event.target.id]: event.target.value,
+			},
+		});
 	}
+
 	handelChangeCheckbox(event) {
 		const checkBox = event.target;
-		const eventType = this.state.eventType;
+		const eventType = this.state.formData.eventType;
 		if (checkBox.checked) {
 			eventType.push(checkBox.id);
 			this.setState(eventType);
@@ -47,7 +55,7 @@ class EventForm extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		// set data state
-		const data = this.state;
+		const data = this.state.formData;
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 
@@ -57,15 +65,18 @@ class EventForm extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				alert("Event Created, Redirecting to My Events");
+				this.setState({ isFormSubmitted: true, eventID: response.data._id });
 			})
 			.catch((err) => {
 				alert(err);
 			});
-		this.setState(this.initialState);
 	}
 
 	render() {
+		if (this.state.isFormSubmitted) {
+			return <Redirect to={`/event/${this.state.eventID}`} />;
+		}
+
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
@@ -79,7 +90,7 @@ class EventForm extends Component {
 							type="text"
 							className="form-control"
 							id="eventTitle"
-							value={this.state.eventTitle}
+							value={this.state.formData.eventTitle}
 							onChange={this.handleChange}
 						/>
 						<br />
@@ -93,7 +104,7 @@ class EventForm extends Component {
 									type="datetime-local"
 									className="form-control"
 									id="dateTime"
-									value={this.state.dateTime}
+									value={this.state.formData.dateTime}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -107,7 +118,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="limit"
 									min="1"
-									value={this.state.limit}
+									value={this.state.formData.limit}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -124,7 +135,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="location"
-									value={this.state.location}
+									value={this.state.formData.location}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -136,7 +147,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="zipCode"
-									value={this.state.zipCode}
+									value={this.state.formData.zipCode}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -153,7 +164,7 @@ class EventForm extends Component {
 								id="description"
 								className="form-control"
 								rows="3"
-								value={this.state.description}
+								value={this.state.formData.description}
 								onChange={this.handleChange}
 							/>
 						</div>
@@ -166,6 +177,7 @@ class EventForm extends Component {
 										className="custom-control-input"
 										id="humanitarian"
 										onChange={this.handelChangeCheckbox}
+										defaultChecked={false}
 									/>
 									<label
 										className="custom-control-label"
@@ -256,26 +268,9 @@ class EventForm extends Component {
 							type="text"
 							className="form-control"
 							id="image"
-							value={this.state.image}
+							value={this.state.formData.image}
 							onChange={this.handleChange}
 						/>
-						{/* <div>
-							<label htmlFor='image' className='grey-text'>
-								Image
-							</label>
-							<div className='custom-file'>
-								<input
-									type='file'
-									className='custom-file-input'
-									id='inputGroupFile01'
-									aria-describedby='inputGroupFileAddon01'
-								/>
-								<label className='custom-file-label' htmlFor='inputGroupFile01'>
-									Select Image
-								</label>
-							</div>
-						</div> */}
-
 						<div className="text-center mt-4">
 							<MDBBtn color="blue" outline type="submit">
 								Create Event
