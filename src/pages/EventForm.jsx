@@ -76,7 +76,7 @@ class EventForm extends Component {
 		if (this.state.isFormSubmitted) {
 			return <Redirect to={`/event/${this.state.eventID}`} />;
 		}
-		console.log(new Date().toISOString());
+
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
