@@ -17,6 +17,8 @@ class HomePage extends Component {
             baseURL: `${process.env.REACT_APP_API_URL}/events`,
             url: `${process.env.REACT_APP_API_URL}/events`,
             eventData: null,
+            noResultMessage:  "No related event found for next 1 month",// message of display when no event found
+            message: "" // message of event display result
         };
         this.options = [
             { value: "humanitarian", label: "Humanitarian" },
@@ -86,6 +88,7 @@ class HomePage extends Component {
                 {
                     all: event.target.id === "all",
                     search: false,
+                    message: "No related event found for next 1 month",
                     url:
                         this.state.baseURL +
                         `${event.target.id !== "all" ? "" : "/all"}` +
@@ -170,7 +173,7 @@ class HomePage extends Component {
                 <MDBRow className="pt-4">
                     <MDBCol md="7" lg="8">
                         {!this.state.eventData ? null : (
-                            <EventsContainer eventData={this.state.eventData} />
+                            <EventsContainer eventData={this.state.eventData} noResultMessage={this.state.noResultMessage}/>
                         )}
                     </MDBCol>
                     <MDBCol md="5" lg="4">
