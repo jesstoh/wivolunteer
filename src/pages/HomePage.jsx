@@ -17,8 +17,8 @@ class HomePage extends Component {
             baseURL: `${process.env.REACT_APP_API_URL}/events`,
             url: `${process.env.REACT_APP_API_URL}/events`,
             eventData: null,
-            noResultMessage:  "No related event found for next 1 month",// message of display when no event found
-            message: "" // message of event display result
+            noResultMessage: "No related event found for next 1 month", // message of display when no event found
+            message: "", // message of event display result
         };
         this.options = [
             { value: "humanitarian", label: "Humanitarian" },
@@ -35,16 +35,17 @@ class HomePage extends Component {
     }
 
     // Fetch event data
-    fetchData() {
+    fetchData(message, noResultMessage) {
         const token = localStorage.getItem("token");
         axios
             .get(this.state.url, {
                 headers: { authorization: `Bearer ${token}` },
             })
             .then((response) => {
-                this.setState({ eventData: response.data }, () => {
-                    console.log(this.state.eventData);
-                    console.log(this.state.eventData === []);
+                this.setState({
+                    eventData: response.data,
+                    message: message,
+                    noResultMessage: noResultMessage,
                 });
             })
             .catch((err) => {
@@ -70,7 +71,8 @@ class HomePage extends Component {
                     `/?date=${value.toISOString()}`,
             },
             () => {
-                this.fetchData();
+                this.fetchData("",
+                "No related event found for next 1 month");
             }
         );
     }
@@ -88,14 +90,17 @@ class HomePage extends Component {
                 {
                     all: event.target.id === "all",
                     search: false,
-                    message: "No related event found for next 1 month",
+
                     url:
                         this.state.baseURL +
                         `${event.target.id !== "all" ? "" : "/all"}` +
                         `/?date=${this.state.date.toISOString()}`,
                 },
                 () => {
-                    this.fetchData();
+                    this.fetchData(
+                        "",
+                        "No related event found for next 1 month"
+                    );
                 }
             );
         }
@@ -105,10 +110,10 @@ class HomePage extends Component {
     handleSearch(event) {
         event.preventDefault();
         // convert to query string
-        const cat = JSON.stringify(
-            this.state.searchValue.map((ele) => ele.value)
-        );
-        console.log(cat);
+        const searchCat = this.state.searchValue.map((ele) => ele.value);
+        const cat = JSON.stringify(searchCat);
+
+        // console.log(cat);
         this.setState(
             {
                 search: true,
@@ -118,8 +123,8 @@ class HomePage extends Component {
                     `/find/?cat=${cat}&date=${this.state.date.toISOString()}`,
             },
             () => {
-                console.log(this.state.url)
-                this.fetchData();
+                // console.log(this.state.url)
+                this.fetchData(`Search Result for ${searchCat}`, `No Search Result for ${searchCat}`);
             }
         );
     }
@@ -173,7 +178,11 @@ class HomePage extends Component {
                 <MDBRow className="pt-4">
                     <MDBCol md="7" lg="8">
                         {!this.state.eventData ? null : (
-                            <EventsContainer eventData={this.state.eventData} noResultMessage={this.state.noResultMessage}/>
+                            <EventsContainer
+                                eventData={this.state.eventData}
+                                noResultMessage={this.state.noResultMessage}
+                                message={this.state.message}
+                            />
                         )}
                     </MDBCol>
                     <MDBCol md="5" lg="4">

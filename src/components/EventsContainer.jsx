@@ -7,7 +7,7 @@ class EventsContainer extends Component {
 			<div style={{ width: '100%' }}>{this.props.noResultMessage}</div>
 		) : (
 			<div style={{ width: '100%' }}>
-				<span>{this.props.message}</span>
+				<p className="pl-4">{this.props.message}</p>
 				{this.props.eventData.map((event) => (
 					<EventCard key={event._id} event={event} />
 				))}
