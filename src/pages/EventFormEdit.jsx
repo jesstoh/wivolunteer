@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Redirect } from "react-router-dom";
+import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
 import axios from "axios";
 
 class EventForm extends Component {
@@ -23,7 +24,6 @@ class EventForm extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handelChangeCheckbox = this.handelChangeCheckbox.bind(this);
 	}
 	componentDidMount() {
 		// get token from localStorage
@@ -50,24 +50,7 @@ class EventForm extends Component {
 				[event.target.id]: event.target.value,
 			},
 		});
-	}
-
-	handelChangeCheckbox(event) {
-		const checkBox = event.target;
-		const eventType = this.state.formData.eventType;
-
-		if (checkBox.checked) {
-			eventType.push(checkBox.id);
-			this.setState(eventType);
-		} else {
-			let index = eventType.indexOf(checkBox.id);
-			if (index > -1) {
-				eventType.splice(index, 1);
-				this.setState({
-					eventType: eventType,
-				});
-			}
-		}
+		console.log(this.state.formData);
 	}
 
 	handleSubmit(event) {
@@ -126,7 +109,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="dateTime"
 									value={this.state.formData.dateTime}
-									min={new Date().toISOString().split(".")[0]}
+									min={new Date().toISOString().replace(/.\d+Z$/g, "Z")}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -191,96 +174,8 @@ class EventForm extends Component {
 							/>
 						</div>
 						<br />
-						<MDBRow>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="humanitarian"
-										onChange={this.handelChangeCheckbox}
-										defaultChecked={false}
-									/>
-									<label
-										className="custom-control-label"
-										htmlFor="humanitarian"
-									>
-										Humanitarian
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="environment"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="environment">
-										Environment
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="animal-welfare"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label
-										className="custom-control-label"
-										htmlFor="animal-welfare"
-									>
-										Animal-Welfare
-									</label>
-								</div>
-							</MDBCol>
-						</MDBRow>
-						<br />
-						<MDBRow>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="community"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="community">
-										Community
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="disability"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="disability">
-										Disability
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="health"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="health">
-										Health
-									</label>
-								</div>
-							</MDBCol>
-						</MDBRow>
+
+						<EventTypeCheckboxes eventType={this.state.formData.eventType} />
 
 						<br />
 						<label htmlFor="image" className="grey-text">
