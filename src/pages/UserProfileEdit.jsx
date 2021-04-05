@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
 import { Redirect } from "react-router-dom";
 
 import axios from "axios";
@@ -129,6 +130,10 @@ class UserProfileEdit extends Component {
 								/>
 							</MDBCol>
 						</MDBRow>
+						<br />
+
+						<EventTypeCheckboxes eventType={this.state.userProfile.interests} />
+
 						<br />
 						<label htmlFor="image" className="grey-text">
 							Image:
