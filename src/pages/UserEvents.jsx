@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { MDBContainer, MDBTypography, MDBCol, MDBRow } from "mdbreact";
+import { MDBContainer, MDBBtn, MDBCol, MDBRow } from "mdbreact";
 import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
 class UserEvents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			selectedButton: "joinedEvents",
+			noResultMessage: "View your events here.",
 			selectedEvents: [],
 			userEvents: {
 				interestedEvents: [],
-				joinedEvents: [],
 				organizedEvents: [],
+				joinedEvents: [],
 			},
 		};
 
@@ -20,8 +22,11 @@ class UserEvents extends Component {
 	onClick(event) {
 		event.preventDefault();
 		// set selected events based on clicked tag
-		const selectedEventType = event.target.id;
-		this.setState({ selectedEvents: this.state.userEvents[selectedEventType] });
+		const selectedEventType = event.currentTarget.id;
+		this.setState({
+			selectedButton: selectedEventType,
+			selectedEvents: this.state.userEvents[selectedEventType],
+		});
 	}
 
 	componentDidMount() {
@@ -34,8 +39,14 @@ class UserEvents extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				// set user events to state
-				this.setState({ userEvents: response.data });
+				// store fetched data
+				const data = response.data;
+				// set user events into state
+				this.setState({
+					userEvents: data,
+					selectedEvents: data.organizedEvents,
+					noResultMessage: "No events avaliable to display.",
+				});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -49,25 +60,62 @@ class UserEvents extends Component {
 					<h1>My Events</h1>
 					<MDBRow className="mt-4">
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="joinedEvents">Particpated Events</a>
-							</h5>
+							{/* <EventButton
+								buttonId="joinedEvents"
+								buttonTitle="Participated Events"
+								onClick={this.onClick}
+							/> */}
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="joinedEvents"
+								className="btn-rounded"
+								active={
+									this.state.selectedButton === "joinedEvents" ? true : false
+								}
+								onClick={this.onClick}
+							>
+								Participated Events
+							</MDBBtn>
 						</MDBCol>
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="organizedEvents">Organized Events</a>
-							</h5>
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="organizedEvents"
+								className="btn-rounded"
+								active={
+									this.state.selectedButton === "organizedEvents" ? true : false
+								}
+								onClick={this.onClick}
+							>
+								Organized Events
+							</MDBBtn>
 						</MDBCol>
 						<MDBCol size="4">
-							<h5 onClick={this.onClick}>
-								<a id="interestedEvents">Interested Events</a>
-							</h5>
+							<MDBBtn
+								color="primary"
+								size="md"
+								id="interestedEvents"
+								className="btn-rounded"
+								active={
+									this.state.selectedButton === "interestedEvents"
+										? true
+										: false
+								}
+								onClick={this.onClick}
+							>
+								Interested Events
+							</MDBBtn>
 						</MDBCol>
 					</MDBRow>
 					<br />
 					<MDBRow>
-						<MDBCol size="12">
-							<EventsContainer eventData={this.state.selectedEvents} />
+						<MDBCol size="12" className="ml-4">
+							<EventsContainer
+								eventData={this.state.selectedEvents}
+								noResultMessage={this.state.noResultMessage}
+							/>
 						</MDBCol>
 					</MDBRow>
 				</MDBContainer>
