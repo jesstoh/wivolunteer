@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-    MDBBtn,
     MDBCard,
     MDBCardBody,
     MDBCardImage,
@@ -9,6 +8,7 @@ import {
     MDBCol,
 } from "mdbreact";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
 
 class EventCard extends Component {
     render() {
@@ -21,7 +21,8 @@ class EventCard extends Component {
                                 {this.props.event.eventTitle}
                             </MDBCardTitle>
                             <MDBCardText>
-                                Date: {this.props.event.dateTime} <br />
+                                Date: <Moment date={this.props.event.dateTime} format="ddd, DD MMM YYYY"/> <br />
+                                Time: <Moment date={this.props.event.dateTime} format="LT"/> <br />
                                 Organizer: {
                                     this.props.event.organiser.username
                                 }{" "}

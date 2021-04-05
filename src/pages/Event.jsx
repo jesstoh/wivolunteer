@@ -11,6 +11,7 @@ import {
     MDBCol,
     MDBRow,
 } from "mdbreact";
+import Moment from "react-moment";
 
 import EventAction from "../components/EventAction.jsx";
 import FeedbackStats from "../components/FeedbackStats.jsx";
@@ -64,10 +65,9 @@ class Event extends Component {
                                 {this.state.event.eventTitle}
                             </MDBCardTitle>
                             <MDBCardText>
-                                Date Time: {this.state.event.dateTime}
-                                <br />
-                                Organized by:{" "}
-                                {this.state.event.organiser.username}
+                                Date: <Moment date={this.state.event.dateTime} format="ddd, DD MMM YYYY"/><br />
+                                Time: <Moment date={this.state.event.dateTime} format="LT"/><br />
+                                Organized by: {this.state.event.organiser.username}
                                 <br />
                                 Location: {this.state.event.location} <br />
                                 Event Type: {this.state.event.eventType} <br />
