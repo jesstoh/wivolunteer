@@ -123,24 +123,44 @@ class HomePage extends Component {
         const searchCat = this.state.searchValue.map((ele) => ele.value);
         const cat = JSON.stringify(searchCat);
 
-        // console.log(cat);
-        this.setState(
-            {
-                search: true,
-                all: false,
-                // searchValue: [],
-                url:
-                    this.state.baseURL +
-                    `/find/?cat=${cat}&date=${this.state.date.toISOString()}`,
-            },
-            () => {
-                // console.log(this.state.url)
-                this.fetchData(
-                    `Search Result for ${searchCat}`,
-                    `No Search Result for ${searchCat} in next 1 month`
-                );
-            }
-        );
+        // If not empty search string
+        if (searchCat.length) {
+            this.setState(
+                {
+                    search: true,
+                    all: false,
+                    // searchValue: [],
+                    url:
+                        this.state.baseURL +
+                        `/find/?cat=${cat}&date=${this.state.date.toISOString()}`,
+                },
+                () => {
+                    // console.log(this.state.url)
+                    this.fetchData(
+                        `Search Result for ${searchCat.join(", ")}`,
+                        `No Search Result for ${searchCat.join(
+                            ", "
+                        )} in next 1 month`
+                    );
+                }
+            );
+        } else { //Show all result if search bar is empty string
+            this.setState(
+                {
+                    all: true,
+                    search: false,
+                    url:
+                        this.state.baseURL +
+                        `/all/?date=${this.state.date.toISOString()}`,
+                },
+                () => {
+                    this.fetchData(
+                        "",
+                        "No related event found for next 1 month"
+                    );
+                }
+            );
+        }
     }
 
     render() {
