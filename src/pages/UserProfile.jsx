@@ -42,7 +42,6 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		console.log(this.state.userProfile);
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-4 text-center">

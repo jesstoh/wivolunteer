@@ -44,7 +44,7 @@ class UserEvents extends Component {
 				// set user events into state
 				this.setState({
 					userEvents: data,
-					selectedEvents: data.organizedEvents,
+					selectedEvents: data.joinedEvents,
 					noResultMessage: "No events avaliable to display.",
 				});
 			})
