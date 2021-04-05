@@ -8,6 +8,7 @@ class EventForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isDataReady: false,
 			isFormSubmitted: false,
 			eventID: "",
 			formData: {
@@ -39,7 +40,7 @@ class EventForm extends Component {
 				// format date to display in dateTime input
 				response.data.dateTime = response.data.dateTime.split(".")[0];
 				// set data as state
-				this.setState({ formData: response.data });
+				this.setState({ formData: response.data, isDataReady: true });
 			});
 	}
 
@@ -181,7 +182,11 @@ class EventForm extends Component {
 						</div>
 						<br />
 
-						<EventTypeCheckboxes eventType={this.state.formData.eventType} />
+						{this.state.isDataReady ? (
+							<EventTypeCheckboxes eventType={this.state.formData.eventType} />
+						) : (
+							""
+						)}
 
 						<br />
 						<label htmlFor="image" className="grey-text">

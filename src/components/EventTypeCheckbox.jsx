@@ -3,9 +3,6 @@ import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 class EventTypeCheckboxes extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			eventType: [],
-		};
 		this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
 	}
 
@@ -33,7 +30,7 @@ class EventTypeCheckboxes extends Component {
 								id="humanitarian"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("humanitarian") ? true : false
+									this.props.eventType.includes("humanitarian") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="humanitarian">
@@ -49,7 +46,7 @@ class EventTypeCheckboxes extends Component {
 								id="environment"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("environment") ? true : false
+									this.props.eventType.includes("environment") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="environment">
@@ -65,7 +62,7 @@ class EventTypeCheckboxes extends Component {
 								id="animal-welfare"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("animal-welfare") ? true : false
+									this.props.eventType.includes("animal-welfare") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="animal-welfare">
@@ -84,7 +81,7 @@ class EventTypeCheckboxes extends Component {
 								id="community"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("community") ? true : false
+									this.props.eventType.includes("community") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="community">
@@ -100,7 +97,7 @@ class EventTypeCheckboxes extends Component {
 								id="disability"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("disability") ? true : false
+									this.props.eventType.includes("disability") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="disability">
@@ -116,7 +113,7 @@ class EventTypeCheckboxes extends Component {
 								id="health"
 								onChange={this.handleChangeCheckbox}
 								defaultChecked={
-									this.state.eventType.includes("health") ? true : false
+									this.props.eventType.includes("health") ? true : false
 								}
 							/>
 							<label className="custom-control-label" htmlFor="health">

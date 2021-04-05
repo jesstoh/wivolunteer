@@ -9,6 +9,7 @@ class UserProfileEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isDataReady: false,
 			isFormSubmitted: false,
 			userProfile: {
 				email: "",
@@ -34,13 +35,12 @@ class UserProfileEdit extends Component {
 			})
 			.then((response) => {
 				// set fetched profile as state
-				this.setState({ userProfile: response.data });
+				this.setState({ userProfile: response.data, isDataReady: true });
 			});
 	}
 
 	handleChange(event) {
 		event.preventDefault();
-
 		// update userProfile based on event target id
 		this.setState({
 			userProfile: {
@@ -51,7 +51,6 @@ class UserProfileEdit extends Component {
 	}
 	handleSubmit(event) {
 		event.preventDefault();
-
 		const token = localStorage.getItem("token");
 		const data = this.state.userProfile;
 		axios
@@ -131,8 +130,13 @@ class UserProfileEdit extends Component {
 							</MDBCol>
 						</MDBRow>
 						<br />
-
-						<EventTypeCheckboxes eventType={this.state.userProfile.interests} />
+						{this.state.isDataReady ? (
+							<EventTypeCheckboxes
+								eventType={this.state.userProfile.interests}
+							/>
+						) : (
+							""
+						)}
 
 						<br />
 						<label htmlFor="image" className="grey-text">
