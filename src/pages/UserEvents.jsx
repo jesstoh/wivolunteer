@@ -6,7 +6,7 @@ class UserEvents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedButton: "organizedEvents",
+			selectedButton: "joinedEvents",
 			noResultMessage: "View your events here.",
 			selectedEvents: [],
 			userEvents: {
