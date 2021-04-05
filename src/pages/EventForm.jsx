@@ -3,7 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-
+import moment from "moment";
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
@@ -87,8 +87,14 @@ class EventForm extends Component {
 									type="datetime-local"
 									className="form-control"
 									id="dateTime"
+									min={
+										moment()
+											.seconds(0)
+											.milliseconds(0)
+											.toISOString()
+											.split(".")[0]
+									}
 									value={this.state.formData.dateTime}
-									min={new Date().toISOString().split(".")[0]}
 									onChange={this.handleChange}
 								/>
 								<br />
