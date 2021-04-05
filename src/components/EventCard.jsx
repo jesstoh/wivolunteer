@@ -22,7 +22,7 @@ class EventCard extends Component {
                                 {this.props.event.eventTitle}
                             </MDBCardTitle>
                             <MDBRow>
-                                <MDBCol md="4">
+                                <MDBCol md="4" className="pb-3 text-center">
                                     <img
                                         src={this.props.event.image}
                                         className="img-fluid img-thumbnail"
