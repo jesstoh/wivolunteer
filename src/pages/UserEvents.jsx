@@ -6,12 +6,13 @@ class UserEvents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			selectedButton: "organizedEvents",
 			noResultMessage: "View your events here.",
 			selectedEvents: [],
 			userEvents: {
 				interestedEvents: [],
-				joinedEvents: [],
 				organizedEvents: [],
+				joinedEvents: [],
 			},
 		};
 
@@ -22,7 +23,10 @@ class UserEvents extends Component {
 		event.preventDefault();
 		// set selected events based on clicked tag
 		const selectedEventType = event.currentTarget.id;
-		this.setState({ selectedEvents: this.state.userEvents[selectedEventType] });
+		this.setState({
+			selectedButton: selectedEventType,
+			selectedEvents: this.state.userEvents[selectedEventType],
+		});
 	}
 
 	componentDidMount() {
@@ -56,15 +60,22 @@ class UserEvents extends Component {
 					<h1>My Events</h1>
 					<MDBRow className="mt-4">
 						<MDBCol size="4">
+							{/* <EventButton
+								buttonId="joinedEvents"
+								buttonTitle="Participated Events"
+								onClick={this.onClick}
+							/> */}
 							<MDBBtn
 								color="primary"
 								size="md"
 								id="joinedEvents"
 								className="btn-rounded"
+								active={
+									this.state.selectedButton === "joinedEvents" ? true : false
+								}
 								onClick={this.onClick}
-								rounded
 							>
-								Particpated Events
+								Participated Events
 							</MDBBtn>
 						</MDBCol>
 						<MDBCol size="4">
@@ -73,8 +84,10 @@ class UserEvents extends Component {
 								size="md"
 								id="organizedEvents"
 								className="btn-rounded"
+								active={
+									this.state.selectedButton === "organizedEvents" ? true : false
+								}
 								onClick={this.onClick}
-								rounded
 							>
 								Organized Events
 							</MDBBtn>
@@ -85,8 +98,12 @@ class UserEvents extends Component {
 								size="md"
 								id="interestedEvents"
 								className="btn-rounded"
+								active={
+									this.state.selectedButton === "interestedEvents"
+										? true
+										: false
+								}
 								onClick={this.onClick}
-								rounded
 							>
 								Interested Events
 							</MDBBtn>
@@ -94,7 +111,7 @@ class UserEvents extends Component {
 					</MDBRow>
 					<br />
 					<MDBRow>
-						<MDBCol size="12">
+						<MDBCol size="12" className="ml-4">
 							<EventsContainer
 								eventData={this.state.selectedEvents}
 								noResultMessage={this.state.noResultMessage}
