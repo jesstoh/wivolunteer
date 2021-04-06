@@ -57,15 +57,10 @@ class UserEvents extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<MDBContainer className="text-center mt-4 ">
-					<h1>My Events</h1>
-					<MDBRow className="mt-4">
+				<MDBContainer className="mt-4 ">
+					<h1 className="text-center">My Events</h1>
+					<MDBRow className=" text-center mt-4">
 						<MDBCol size="4">
-							{/* <EventButton
-								buttonId="joinedEvents"
-								buttonTitle="Participated Events"
-								onClick={this.onClick}
-							/> */}
 							<MDBBtn
 								color="primary"
 								size="md"
@@ -111,8 +106,8 @@ class UserEvents extends Component {
 						</MDBCol>
 					</MDBRow>
 					<br />
-					<MDBRow>
-						<MDBCol size="12" className="ml-4">
+					<MDBRow className="ml-5">
+						<MDBCol size="12" className="ml-2">
 							<EventsContainer
 								eventData={this.state.selectedEvents}
 								noResultMessage={this.state.noResultMessage}
