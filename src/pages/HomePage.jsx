@@ -191,6 +191,7 @@ class HomePage extends Component {
 
                 <MDBRow className="pt-4">
                     <MDBCol md="5" lg="4" className="pt-5 order-sm-last mb-5">
+                        <p className="font-italic pt-2" style={{"font-size":"smaller"}}>Pick a date to find related events from selected date to next 1 month</p>
                         <Calendar
                             className="mx-auto mt-3"
                             minDate={new Date()}
