@@ -76,32 +76,17 @@ class UserProfileEdit extends Component {
 					<p className="h4 text-center mb-4">Update My Profile</p>
 
 					<form onSubmit={this.handleSubmit}>
-						<MDBRow>
-							<MDBCol size="6">
-								<label htmlFor="email" className="grey-text">
-									Email:
-								</label>
-								<input
-									type="text"
-									className="form-control"
-									id="email"
-									value={this.state.userProfile.email}
-									onChange={this.handleChange}
-								/>
-							</MDBCol>
-							<MDBCol size="6">
-								<label htmlFor="username" className="grey-text">
-									Username:
-								</label>
-								<input
-									type="text"
-									className="form-control"
-									id="username"
-									value={this.state.userProfile.username}
-									onChange={this.handleChange}
-								/>
-							</MDBCol>
-						</MDBRow>
+						<label htmlFor="username" className="grey-text">
+							Username:
+						</label>
+						<input
+							type="text"
+							className="form-control"
+							id="username"
+							value={this.state.userProfile.username}
+							onChange={this.handleChange}
+						/>
+
 						<br />
 						<MDBRow>
 							<MDBCol size="6">
