@@ -26,7 +26,7 @@ class EventCard extends Component {
                                     <img
                                         src={this.props.event.image}
                                         className="img-fluid img-thumbnail"
-                                        style={{ "max-height": "7rem" }}
+                                        style={{ "maxHeight": "7rem" }}
                                     />
                                 </MDBCol>
                                 <MDBCol md="6">
