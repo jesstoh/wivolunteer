@@ -5,24 +5,33 @@ class ImageUploadWidget extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			imageUrl: "",
-			imageAlt: "",
+			isUploaded: false,
 			cloudName: "eclixpe",
 		};
 	}
 	openWidget = () => {
 		// create the widget
+
 		const widget = window.cloudinary.createUploadWidget(
 			{
 				cloudName: this.state.cloudName,
 				uploadPreset: "nkhmpywj",
+				multiple: false,
+				showAdvancedOptions: false,
+				defaultSource: "local",
+				sources: [
+					"local",
+					"camera",
+					"google_drive",
+					"facebook",
+					"instagram",
+					"url",
+				],
 			},
-			(error, result) => {
-				if (result.event === "success") {
-					this.setState({
-						imageUrl: result.info.secure_url,
-						imageAlt: result.info.original_filename,
-					});
+			(error, response) => {
+				if (response.event === "success") {
+					this.props.getImageUrl(response.info.secure_url);
+					this.setState({ isUploaded: true });
 				} else {
 					console.log(error);
 				}
@@ -32,7 +41,16 @@ class ImageUploadWidget extends Component {
 	};
 
 	render() {
-		return <MDBBtn onClick={this.openWidget}>Upload Image</MDBBtn>;
+		return (
+			<MDBBtn
+				className="btn-rounded ml-4 text-center"
+				outline={this.state.isUploaded ? false : true}
+				size="sm"
+				onClick={this.openWidget}
+			>
+				{this.state.isUploaded ? "Image Uploaded" : "Upload Image"}
+			</MDBBtn>
+		);
 	}
 }
 
