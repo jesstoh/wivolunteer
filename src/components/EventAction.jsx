@@ -191,7 +191,7 @@ class EventAction extends Component {
                         color="warning"
                         className="btn-rounded"
                     >
-                        <MDBIcon icon="times" size="lg" /> Not Going
+                        <MDBIcon icon="times" size="lg" className="pl-1"/> Not Going
                     </MDBBtn>
                 );
             } else {
@@ -208,7 +208,7 @@ class EventAction extends Component {
                                 onClick={this.joinEvent}
                                 className="btn-rounded"
                             >
-                                <MDBIcon icon="check" size="lg" /> Join
+                                <MDBIcon icon="check" size="lg" className="pr-1"/> Join
                             </MDBBtn>
                         )}
                         <MDBBtn
@@ -235,7 +235,7 @@ class EventAction extends Component {
                                         size="lg"
                                         className="black-text"
                                     ></MDBIcon>
-                                    <span className="black-text pl">
+                                    <span className="black-text pl-1">
                                         Add to wish list
                                     </span>
                                 </React.Fragment>
