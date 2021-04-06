@@ -41,7 +41,9 @@ class EventForm extends Component {
 		const data = this.state.formData;
 		// get token from localStorage
 		const token = localStorage.getItem("token");
-
+		// format dateTime
+		data.dateTime = moment(data.dateTime).toISOString(true).split(".")[0];
+		//console.log(data.dateTime);
 		// create event
 		axios
 			.post(`${process.env.REACT_APP_API_URL}/events`, data, {
