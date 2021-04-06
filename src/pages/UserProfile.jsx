@@ -94,7 +94,6 @@ class UserProfile extends Component {
 							Edit Profile
 						</MDBBtn>
 					</Link>
-					<h5>User event participation/organisation stats charts goes here</h5>
 				</MDBContainer>
 			</React.Fragment>
 		);
