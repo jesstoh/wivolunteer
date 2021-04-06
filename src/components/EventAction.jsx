@@ -171,7 +171,8 @@ class EventAction extends Component {
             if (new Date(this.props.event.dateTime) < new Date()) {
                 return (
                     <FeedbackAction
-                        eventId={this.props.event._id} eventParticipant={this.props.event.participants}
+                        eventId={this.props.event._id}
+                        eventParticipant={this.props.event.participants}
                         userId={this.props.user._id}
                     />
                 );
@@ -199,7 +200,7 @@ class EventAction extends Component {
                     <React.Fragment>
                         {this.props.event.participants.length ===
                         this.props.event.limit ? (
-                            <MDBBtn disabled color="blue-grey">
+                            <MDBBtn disabled color="blue-grey btn-rounded">
                                 Full
                             </MDBBtn>
                         ) : (
@@ -210,25 +211,34 @@ class EventAction extends Component {
                                 <MDBIcon icon="check" size="lg" /> Join
                             </MDBBtn>
                         )}
-                        <MDBBtn onClick={this.toggleWish} color="white">
+                        <MDBBtn
+                            onClick={this.toggleWish}
+                            color="white"
+                            className="btn-rounded"
+                        >
                             {this.state.wish ? (
-                                <MDBIcon
-                                    icon="heart"
-                                    size="lg"
-                                    className="red-text"
-                                >
-                                    {" "}
-                                    Wished{" "}
-                                </MDBIcon>
+                                <React.Fragment>
+                                    <MDBIcon
+                                        icon="heart"
+                                        size="lg"
+                                        className="red-text"
+                                    ></MDBIcon>
+                                    <span className="red-text pl-1">
+                                        Wished
+                                    </span>
+                                </React.Fragment>
                             ) : (
-                                <MDBIcon
-                                    far
-                                    icon="heart"
-                                    size="lg"
-                                    className="black-text"
-                                >
-                                    Add to wish list
-                                </MDBIcon>
+                                <React.Fragment>
+                                    <MDBIcon
+                                        far
+                                        icon="heart"
+                                        size="lg"
+                                        className="black-text"
+                                    ></MDBIcon>
+                                    <span className="black-text pl">
+                                        Add to wish list
+                                    </span>
+                                </React.Fragment>
                             )}
                         </MDBBtn>
                     </React.Fragment>
