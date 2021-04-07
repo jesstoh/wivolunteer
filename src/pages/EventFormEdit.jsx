@@ -60,7 +60,7 @@ class EventForm extends Component {
 		// set data state
 		const data = this.state.formData;
 		// format  date time
-		data.dateTime = moment(data.dateTime).toISOString(true).split(".")[0];
+		data.dateTime = moment(data.dateTime).toISOString(true);
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 		// update event
