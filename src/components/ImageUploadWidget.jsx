@@ -6,7 +6,6 @@ class ImageUploadWidget extends Component {
 		super(props);
 		this.state = {
 			isUploaded: false,
-			cloudName: "eclixpe",
 		};
 	}
 	openWidget = () => {
@@ -14,8 +13,8 @@ class ImageUploadWidget extends Component {
 
 		const widget = window.cloudinary.createUploadWidget(
 			{
-				cloudName: this.state.cloudName,
-				uploadPreset: "nkhmpywj",
+				cloudName: process.env.REACT_APP_CLOUNDIARY_CLOUD_NAME,
+				uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
 				multiple: false,
 				showAdvancedOptions: false,
 				defaultSource: "local",

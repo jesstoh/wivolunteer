@@ -42,7 +42,6 @@ class EventForm extends Component {
 				[event.target.id]: event.target.value,
 			},
 		});
-		console.log(this.state.formData.image);
 	}
 
 	handleSubmit(event) {
