@@ -16,7 +16,9 @@ class ImageUploadWidget extends Component {
 				cloudName: process.env.REACT_APP_CLOUNDIARY_CLOUD_NAME,
 				uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
 				multiple: false,
+				singleUploadAutoClose: false,
 				showAdvancedOptions: false,
+				showCompletedButton: true,
 				defaultSource: "local",
 				sources: [
 					"local",
