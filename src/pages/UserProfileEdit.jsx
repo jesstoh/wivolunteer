@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
+import ImageUploadWidget from "../components/ImageUploadWidget.jsx";
 import { Redirect } from "react-router-dom";
 
 import axios from "axios";
@@ -22,6 +23,7 @@ class UserProfileEdit extends Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.getImageUrl = this.getImageUrl.bind(this);
 	}
 
 	componentDidMount() {
@@ -38,7 +40,14 @@ class UserProfileEdit extends Component {
 				this.setState({ userProfile: response.data, isDataReady: true });
 			});
 	}
-
+	getImageUrl(imageUrl) {
+		this.setState({
+			userProfile: {
+				...this.state.userProfile,
+				image: imageUrl,
+			},
+		});
+	}
 	handleChange(event) {
 		event.preventDefault();
 		// update userProfile based on event target id
@@ -125,16 +134,11 @@ class UserProfileEdit extends Component {
 
 						<br />
 						<label htmlFor="image" className="grey-text">
-							Image:
+							Upload Profile Image:
 						</label>
-						<input
-							type="text"
-							className="form-control"
-							id="image"
-							value={this.state.userProfile.image}
-							onChange={this.handleChange}
-						/>
+						<ImageUploadWidget getImageUrl={this.getImageUrl} />
 						<br />
+
 						<label className="grey-text">Image Preview:</label>
 						<img
 							src={this.state.userProfile.image}
