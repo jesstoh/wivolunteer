@@ -38,7 +38,9 @@ class EventForm extends Component {
 			})
 			.then((response) => {
 				// format date to display in dateTime input
-				response.data.dateTime = response.data.dateTime.split(".")[0];
+				response.data.dateTime = moment(response.data.dateTime)
+					.toISOString(true)
+					.split(".")[0];
 				// set data as state
 				this.setState({ formData: response.data, isDataReady: true });
 			});
@@ -51,13 +53,14 @@ class EventForm extends Component {
 				[event.target.id]: event.target.value,
 			},
 		});
-		console.log(this.state.formData);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		// set data state
 		const data = this.state.formData;
+		// format  date time
+		data.dateTime = moment(data.dateTime).toISOString(true);
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 		// update event
