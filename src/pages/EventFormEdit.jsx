@@ -208,7 +208,7 @@ class EventForm extends Component {
 						<br />
 
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Update Event
 							</MDBBtn>
 						</div>

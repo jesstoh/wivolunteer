@@ -144,7 +144,7 @@ class UserProfileEdit extends Component {
 							onChange={this.handleChange}
 						/>
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Update
 							</MDBBtn>
 						</div>

@@ -90,7 +90,7 @@ class UserProfile extends Component {
 							  })}
 					</h5>
 					<Link to="/profile/edit">
-						<MDBBtn color="blue" outline type="submit" className="mb-4">
+						<MDBBtn color="blue" size="md" type="submit" className="mb-4">
 							Edit Profile
 						</MDBBtn>
 					</Link>

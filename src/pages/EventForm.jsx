@@ -179,7 +179,7 @@ class EventForm extends Component {
 						<ImageUploadWidget getImageUrl={this.getImageUrl} />
 
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Create Event
 							</MDBBtn>
 						</div>
