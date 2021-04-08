@@ -144,7 +144,8 @@ class HomePage extends Component {
                     );
                 }
             );
-        } else { //Show all result if search bar is empty string
+        } else {
+            //Show all result if search bar is empty string
             this.setState(
                 {
                     all: true,
@@ -225,7 +226,16 @@ class HomePage extends Component {
                                 </MDBBtn>
                             </MDBCol>
                         </MDBRow>
-                        {!this.state.eventData ? null : (
+                        {!this.state.eventData ? (
+                            <div className="text-center pt-5">
+                                <div
+                                    className="spinner-border text-primary"
+                                    role="status"
+                                >
+                                    <span className="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        ) : (
                             <EventsContainer
                                 eventData={this.state.eventData}
                                 noResultMessage={this.state.noResultMessage}
