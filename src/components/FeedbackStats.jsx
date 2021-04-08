@@ -38,7 +38,7 @@ class FeedbackStats extends Component {
 						qn3[feedback.isSatisfied - 1]++;
 					});
 					this.setState({ qn1: qn1, qn2: qn2, qn3: qn3 });
-					console.log(qn1, qn2, qn3);
+					// console.log(qn1, qn2, qn3);
 				}
 			});
 	}
@@ -56,9 +56,10 @@ class FeedbackStats extends Component {
 			},
 		};
 		const chartColors = {
+			// pie chart colors
 			pieColors: ["#BA274A", "#3ED388", "#2191FB"],
 			hoverPieColors: ["#FF6384", "#60F2A8", "#5FB9F7"],
-
+			// bar chart colors
 			barColors: [
 				"rgb(199, 0, 57)",
 				"rgb(255, 87, 51)",
@@ -86,14 +87,26 @@ class FeedbackStats extends Component {
 			],
 		};
 
-		const data1 = {
+		const isOrganized = {
 			labels: ["1", "2", "3", "4", "5"],
 			datasets: [
 				{
 					label: ["1", "2", "3", "4", "5"],
 					backgroundColor: chartColors.barColors,
 					hoverBackgroundColor: chartColors.hoverBarColors,
-					data: [5, 5, 7, 8, 10],
+					data: this.state.qn2,
+				},
+			],
+		};
+
+		const isSatisfied = {
+			labels: ["1", "2", "3", "4", "5"],
+			datasets: [
+				{
+					label: ["1", "2", "3", "4", "5"],
+					backgroundColor: chartColors.barColors,
+					hoverBackgroundColor: chartColors.hoverBarColors,
+					data: this.state.qn3,
 				},
 			],
 		};
@@ -101,18 +114,29 @@ class FeedbackStats extends Component {
 			<MDBContainer>
 				<h5>Event statistics</h5>
 				<p>Did you allocated sufficient resources for your event?</p>
-
 				<Pie data={resourcesFeedback} />
 				<br />
 				<p>How well organized is your event?</p>
-				<Bar data={data1} width={100} height={50} options={chartOptions} />
+				<Bar
+					data={isOrganized}
+					width={100}
+					height={50}
+					options={chartOptions}
+				/>
 				<br />
 				<p>How satisfied are participants after your event?</p>
-				<Bar data={data1} width={100} height={50} options={chartOptions} />
+				<Bar
+					data={isSatisfied}
+					width={100}
+					height={50}
+					options={chartOptions}
+				/>
 				<br />
 				<h5>Additional Information</h5>
-				<p>- {"data here"} have submitted feedback for your event.</p>
-				<p>- {"data here"} have participated in your event.</p>
+				<ul>
+					<li>{"data here"} have submitted feedback for your event.</li>
+					<li>{"data here"} have participated in your event.</li>
+				</ul>
 			</MDBContainer>
 		);
 	}
