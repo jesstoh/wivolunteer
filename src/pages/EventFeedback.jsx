@@ -9,7 +9,7 @@ class EventFeedback extends Component {
 		this.state = {
 			isFeedbackDone: false,
 			eventTitle: this.props.eventTitle,
-			qn1: "Just nice",
+			qn1: 2,
 			qn2: 3,
 			qn3: 3,
 		};
@@ -51,7 +51,6 @@ class EventFeedback extends Component {
 		if (this.state.isFeedbackDone) {
 			return <Redirect to="/home" />;
 		}
-
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5">
@@ -65,17 +64,9 @@ class EventFeedback extends Component {
 					</p>
 					<MDBFormInline>
 						<MDBInput
-							onClick={this.onClick("More than enough")}
-							checked={this.state.qn1 === "More than enough" ? true : false}
-							label="More than enough."
-							type="radio"
-							id="qn1"
-							containerClass="mr-5"
-						/>
-						<MDBInput
 							gap
-							onClick={this.onClick("Not enough")}
-							checked={this.state.qn1 === "Not enough" ? true : false}
+							onClick={this.onClick(1)}
+							checked={this.state.qn1 === 1 ? true : false}
 							label="Not enough."
 							type="radio"
 							id="qn1"
@@ -83,9 +74,17 @@ class EventFeedback extends Component {
 						/>
 						<MDBInput
 							gap
-							onClick={this.onClick("Just nice")}
-							checked={this.state.qn1 === "Just nice" ? true : false}
+							onClick={this.onClick(2)}
+							checked={this.state.qn1 === 2 ? true : false}
 							label="Just nice."
+							type="radio"
+							id="qn1"
+							containerClass="mr-5"
+						/>
+						<MDBInput
+							onClick={this.onClick(3)}
+							checked={this.state.qn1 === 3 ? true : false}
+							label="More than enough."
 							type="radio"
 							id="qn1"
 							containerClass="mr-5"
