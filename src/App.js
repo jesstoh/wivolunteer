@@ -39,6 +39,7 @@ class App extends Component {
 		};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
+		this.updateHeader = this.updateHeader.bind(this);
 	}
 
 	// Check if user is login when page load
@@ -78,6 +79,10 @@ class App extends Component {
 	handleLogin(token, user) {
 		localStorage.setItem("token", token);
 		this.setState({ isAuthenticated: true, token: token, user: user });
+	}
+
+	updateHeader(username) {
+		this.setState({user: {...this.state.user, username: username}})
 	}
 
 	render() {
@@ -146,7 +151,7 @@ class App extends Component {
 								exact
 								path="/profile/edit"
 								isAuthenticated={this.state.isAuthenticated}
-								handleLogout={this.handleLogout}
+								handleLogout={this.handleLogout} updateHeader={this.updateHeader}
 								component={UserProfileEdit}
 							/>
 							<ProtectedRoute

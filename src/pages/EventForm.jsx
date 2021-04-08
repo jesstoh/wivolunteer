@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
+import ImageUploadWidget from "../components/ImageUploadWidget.jsx";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -24,8 +25,16 @@ class EventForm extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.getImageUrl = this.getImageUrl.bind(this);
 	}
-
+	getImageUrl(imageUrl) {
+		this.setState({
+			formData: {
+				...this.state.formData,
+				image: imageUrl,
+			},
+		});
+	}
 	handleChange(event) {
 		this.setState({
 			formData: {
@@ -41,7 +50,8 @@ class EventForm extends Component {
 		const data = this.state.formData;
 		// get token from localStorage
 		const token = localStorage.getItem("token");
-
+		// format dateTime
+		data.dateTime = moment(data.dateTime).toISOString(true);
 		// create event
 		axios
 			.post(`${process.env.REACT_APP_API_URL}/events`, data, {
@@ -164,17 +174,12 @@ class EventForm extends Component {
 
 						<br />
 						<label htmlFor="image" className="grey-text">
-							Image:
+							Upload Event Image:
 						</label>
-						<input
-							type="text"
-							className="form-control"
-							id="image"
-							value={this.state.formData.image}
-							onChange={this.handleChange}
-						/>
+						<ImageUploadWidget getImageUrl={this.getImageUrl} />
+
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Create Event
 							</MDBBtn>
 						</div>

@@ -191,7 +191,7 @@ class EventFeedback extends Component {
 					</MDBFormInline>
 					<form onSubmit={this.handleSubmit}>
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Submit Feedback
 							</MDBBtn>
 						</div>

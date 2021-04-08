@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Redirect } from "react-router-dom";
 import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
+import ImageUploadWidget from "../components/ImageUploadWidget.jsx";
 import axios from "axios";
 import moment from "moment";
 class EventForm extends Component {
@@ -25,6 +26,7 @@ class EventForm extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.getImageUrl = this.getImageUrl.bind(this);
 	}
 	componentDidMount() {
 		// get token from localStorage
@@ -38,12 +40,21 @@ class EventForm extends Component {
 			})
 			.then((response) => {
 				// format date to display in dateTime input
-				response.data.dateTime = response.data.dateTime.split(".")[0];
+				response.data.dateTime = moment(response.data.dateTime)
+					.toISOString(true)
+					.split(".")[0];
 				// set data as state
 				this.setState({ formData: response.data, isDataReady: true });
 			});
 	}
-
+	getImageUrl(imageUrl) {
+		this.setState({
+			formData: {
+				...this.state.formData,
+				image: imageUrl,
+			},
+		});
+	}
 	handleChange(event) {
 		this.setState({
 			formData: {
@@ -51,13 +62,14 @@ class EventForm extends Component {
 				[event.target.id]: event.target.value,
 			},
 		});
-		console.log(this.state.formData);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		// set data state
 		const data = this.state.formData;
+		// format  date time
+		data.dateTime = moment(data.dateTime).toISOString(true);
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 		// update event
@@ -190,18 +202,13 @@ class EventForm extends Component {
 
 						<br />
 						<label htmlFor="image" className="grey-text">
-							Image:
+							Update Event Image:
 						</label>
-						<input
-							type="text"
-							className="form-control"
-							id="image"
-							value={this.state.formData.image}
-							onChange={this.handleChange}
-						/>
+						<ImageUploadWidget getImageUrl={this.getImageUrl} />
+						<br />
 
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Update Event
 							</MDBBtn>
 						</div>
