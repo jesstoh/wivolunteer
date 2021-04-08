@@ -8,6 +8,10 @@ import {
     MDBNavItem,
     MDBNavLink,
     MDBIcon,
+    MDBDropdown,
+    MDBDropdownToggle,
+    MDBDropdownMenu,
+    MDBDropdownItem,
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 
@@ -41,24 +45,38 @@ class Header extends Component {
                     <MDBNavbarToggler onClick={this.onClick} />
                     <MDBCollapse isOpen={this.state.collapse} navbar>
                         <MDBNavbarNav right>
-                            <MDBNavItem active={currentPath === "/home"}>
+                            <MDBNavItem active={currentPath === "/home"} className="mr-3">
                                 <MDBNavLink to="/home">
                                     <MDBIcon icon="home" size="lg" />
                                 </MDBNavLink>
                             </MDBNavItem>
-                            <MDBNavItem active={currentPath === "/profile"}>
-                                <MDBNavLink to="/profile">
-                                    <MDBIcon icon="user" size="lg" />{" "}
-                                    {this.props.user.username}
-                                </MDBNavLink>
+                            <MDBNavItem className="mr-2">
+                                <MDBDropdown>
+                                    <MDBDropdownToggle nav caret>
+                                        <span className="mr-2">
+                                            <MDBIcon icon="user" size="lg" />{" "}
+                                            {this.props.user.username}
+                                        </span>
+                                    </MDBDropdownToggle>
+                                    <MDBDropdownMenu>
+                                        <MDBDropdownItem href="/user/events">
+                                            My Event
+                                        </MDBDropdownItem>
+                                        <MDBDropdownItem href="/profile">
+                                            My Profile
+                                        </MDBDropdownItem>
+                                        <MDBDropdownItem
+                                            onClick={this.props.handleLogout}
+                                        >
+                                            Logout
+                                        </MDBDropdownItem>
+                                    </MDBDropdownMenu>
+                                </MDBDropdown>
                             </MDBNavItem>
-                            <MDBNavItem active={currentPath === "/user/events"}>
-                                <MDBNavLink to="/user/events">
-                                    My Event
+                            <MDBNavItem active={currentPath === "/event/form"} className="mr-2">
+                                <MDBNavLink to="/event/form">
+                                    New Event
                                 </MDBNavLink>
-                            </MDBNavItem>
-                            <MDBNavItem onClick={this.props.handleLogout}>
-                                <MDBNavLink to="#">Logout</MDBNavLink>
                             </MDBNavItem>
                         </MDBNavbarNav>
                     </MDBCollapse>

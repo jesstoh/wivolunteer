@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import {
     MDBContainer,
-    MDBBtn,
+    MDBIcon,
     MDBCard,
     MDBCardBody,
     MDBCardImage,
@@ -11,6 +11,7 @@ import {
     MDBCol,
     MDBRow,
 } from "mdbreact";
+import Moment from "react-moment";
 
 import EventAction from "../components/EventAction.jsx";
 import FeedbackStats from "../components/FeedbackStats.jsx";
@@ -49,7 +50,13 @@ class Event extends Component {
     }
 
     render() {
-        return !this.state.event ? null : (
+        return !this.state.event ? (
+            <div className="text-center pt-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        ) : (
             <MDBContainer className="pt-5">
                 <MDBCol md="9" className="offset-md-1">
                     <MDBCard>
@@ -60,26 +67,49 @@ class Event extends Component {
                             waves
                         />
                         <MDBCardBody>
-                            <MDBCardTitle>
+                            <MDBCardTitle className="pl-3 font-weight-bolder">
                                 {this.state.event.eventTitle}
                             </MDBCardTitle>
-                            <MDBCardText>
-                                Date Time: {this.state.event.dateTime}
+                            <MDBCol className="text-black-50">
+                                <MDBIcon
+                                    far
+                                    icon="calendar-alt"
+                                    className="pr-2"
+                                />
+                                <Moment
+                                    date={this.state.event.dateTime}
+                                    format="ddd, DD MMM YYYY"
+                                />
                                 <br />
-                                Organized by:{" "}
+                                <MDBIcon far icon="clock" className="pr-1" />
+                                <Moment
+                                    date={this.state.event.dateTime}
+                                    format="LT"
+                                />
+                                <br />
+                                <MDBIcon
+                                    icon="map-marker-alt"
+                                    className="pr-2"
+                                />
+                                {this.state.event.location} <br />
+                                <MDBIcon icon="user" className="pr-1" />
+                                Organised by{" "}
                                 {this.state.event.organiser.username}
                                 <br />
-                                Location: {this.state.event.location} <br />
                                 Event Type: {this.state.event.eventType} <br />
-                                Event Description:{" "}
-                                {this.state.event.description}
-                                <br />
                                 Attendees:{" "}
                                 {this.state.event.participants.length} /{" "}
-                                {this.state.event.limit} <br />
-                                Wish: {this.state.event.interested.length}
-                            </MDBCardText>
-                            <MDBRow>
+                                {this.state.event.limit}
+                                <span className="pl-4">
+                                    Wish: {this.state.event.interested.length}
+                                </span>
+                                <h5 className="text-dark pt-3 ">
+                                    About the event
+                                </h5>
+                                <p>{this.state.event.description}</p>
+                            </MDBCol>
+
+                            <MDBRow className="pl-4 pt-2">
                                 {this.state.event.isCancelled ? (
                                     <span className="red-text">
                                         Event Cancelled

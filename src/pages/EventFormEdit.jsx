@@ -1,89 +1,99 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Redirect } from "react-router-dom";
+import EventTypeCheckboxes from "../components/EventTypeCheckbox.jsx";
+import ImageUploadWidget from "../components/ImageUploadWidget.jsx";
 import axios from "axios";
-
+import moment from "moment";
 class EventForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			eventTitle: "",
-			dateTime: "",
-			limit: 1,
-			location: "",
-			zipCode: "",
-			description: "",
-			image: "",
-			eventType: [],
+			isDataReady: false,
+			isFormSubmitted: false,
+			eventID: "",
+			formData: {
+				eventTitle: "",
+				dateTime: "",
+				limit: 1,
+				location: "",
+				zipCode: "",
+				description: "",
+				image: "",
+				eventType: [],
+			},
 		};
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handelChangeCheckbox = this.handelChangeCheckbox.bind(this);
+		this.getImageUrl = this.getImageUrl.bind(this);
 	}
 	componentDidMount() {
 		// get token from localStorage
 		const token = localStorage.getItem("token");
 		// get id from url params
-		const id = this.props.match.params.id;
+		this.eventID = this.props.match.params.id;
 
 		axios
-			.get(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+			.get(`${process.env.REACT_APP_API_URL}/events/${this.eventID}`, {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
 				// format date to display in dateTime input
-				response.data.dateTime = response.data.dateTime.split(".")[0];
+				response.data.dateTime = moment(response.data.dateTime)
+					.toISOString(true)
+					.split(".")[0];
 				// set data as state
-				this.setState(response.data);
+				this.setState({ formData: response.data, isDataReady: true });
 			});
 	}
-
-	handleChange(event) {
-		this.setState({ [event.target.id]: event.target.value });
+	getImageUrl(imageUrl) {
+		this.setState({
+			formData: {
+				...this.state.formData,
+				image: imageUrl,
+			},
+		});
 	}
-
-	handelChangeCheckbox(event) {
-		const checkBox = event.target;
-		const eventType = this.state.eventType;
-		if (checkBox.checked) {
-			eventType.push(checkBox.id);
-			this.setState(eventType);
-		} else {
-			let index = eventType.indexOf(checkBox.id);
-			if (index > -1) {
-				eventType.splice(index, 1);
-				this.setState({
-					eventType: eventType,
-				});
-			}
-		}
+	handleChange(event) {
+		this.setState({
+			formData: {
+				...this.state.formData,
+				[event.target.id]: event.target.value,
+			},
+		});
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		// set data state
-		const data = this.state;
+		const data = this.state.formData;
+		// format  date time
+		data.dateTime = moment(data.dateTime).toISOString(true);
 		// get token from localStorage
 		const token = localStorage.getItem("token");
-		// get id from url params
-		const id = this.props.match.params.id;
-
 		// update event
 		axios
-			.put(`${process.env.REACT_APP_API_URL}/events/${id}/edit`, data, {
-				headers: { authorization: `Bearer ${token}` },
-			})
+			.put(
+				`${process.env.REACT_APP_API_URL}/events/${this.eventID}/edit`,
+				data,
+				{
+					headers: { authorization: `Bearer ${token}` },
+				}
+			)
 			.then((response) => {
-				alert("Event Updated");
+				this.setState({ isFormSubmitted: true });
 			})
 			.catch((err) => {
 				alert(err);
 			});
-		this.setState(this.initialState);
 	}
 
 	render() {
+		if (this.state.isFormSubmitted) {
+			return <Redirect to={`/event/${this.eventID}`} />;
+		}
+
 		return (
 			<React.Fragment>
 				<MDBContainer className="mt-5 mb-5" size="lg">
@@ -97,7 +107,7 @@ class EventForm extends Component {
 							type="text"
 							className="form-control"
 							id="eventTitle"
-							value={this.state.eventTitle}
+							value={this.state.formData.eventTitle}
 							onChange={this.handleChange}
 						/>
 						<br />
@@ -111,7 +121,14 @@ class EventForm extends Component {
 									type="datetime-local"
 									className="form-control"
 									id="dateTime"
-									value={this.state.dateTime}
+									value={this.state.formData.dateTime}
+									min={
+										moment()
+											.seconds(0)
+											.milliseconds(0)
+											.toISOString()
+											.split(".")[0]
+									}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -125,7 +142,7 @@ class EventForm extends Component {
 									className="form-control"
 									id="limit"
 									min="1"
-									value={this.state.limit}
+									value={this.state.formData.limit}
 									onChange={this.handleChange}
 								/>
 								<br />
@@ -142,7 +159,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="location"
-									value={this.state.location}
+									value={this.state.formData.location}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -154,7 +171,7 @@ class EventForm extends Component {
 									type="text"
 									className="form-control"
 									id="zipCode"
-									value={this.state.zipCode}
+									value={this.state.formData.zipCode}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -171,116 +188,27 @@ class EventForm extends Component {
 								id="description"
 								className="form-control"
 								rows="3"
-								value={this.state.description}
+								value={this.state.formData.description}
 								onChange={this.handleChange}
 							/>
 						</div>
 						<br />
-						<MDBRow>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="humanitarian"
-										onChange={this.handelChangeCheckbox}
-										defaultChecked={false}
-									/>
-									<label
-										className="custom-control-label"
-										htmlFor="humanitarian"
-									>
-										Humanitarian
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="environment"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="environment">
-										Environment
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="animal-welfare"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label
-										className="custom-control-label"
-										htmlFor="animal-welfare"
-									>
-										Animal-Welfare
-									</label>
-								</div>
-							</MDBCol>
-						</MDBRow>
-						<br />
-						<MDBRow>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="community"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="community">
-										Community
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="disability"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="disability">
-										Disability
-									</label>
-								</div>
-							</MDBCol>
-							<MDBCol size="4">
-								<div className="custom-control custom-checkbox">
-									<input
-										type="checkbox"
-										className="custom-control-input"
-										id="health"
-										onChange={this.handelChangeCheckbox}
-									/>
-									<label className="custom-control-label" htmlFor="health">
-										Health
-									</label>
-								</div>
-							</MDBCol>
-						</MDBRow>
+
+						{this.state.isDataReady ? (
+							<EventTypeCheckboxes eventType={this.state.formData.eventType} />
+						) : (
+							""
+						)}
 
 						<br />
 						<label htmlFor="image" className="grey-text">
-							Image:
+							Update Event Image:
 						</label>
-						<input
-							type="text"
-							className="form-control"
-							id="image"
-							value={this.state.image}
-							onChange={this.handleChange}
-						/>
+						<ImageUploadWidget getImageUrl={this.getImageUrl} />
+						<br />
 
 						<div className="text-center mt-4">
-							<MDBBtn color="blue" outline type="submit">
+							<MDBBtn color="blue" type="submit">
 								Update Event
 							</MDBBtn>
 						</div>

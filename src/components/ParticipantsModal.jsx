@@ -24,11 +24,16 @@ class ParticipantsModal extends Component {
         return (
             <React.Fragment>
                 <MDBBtn onClick={this.toggle}>Participants Info</MDBBtn>
-                <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-                    <MDBModalHeader toggle={this.toggle}>
-                        Participant Contact Details
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle} className="text-center">
+                    <MDBModalHeader toggle={this.toggle} className="text-center">
+                        Participants
                     </MDBModalHeader>
                     <MDBModalBody>
+                        <MDBRow className="font-weight-bold">
+                            <MDBCol>Username</MDBCol>
+                            <MDBCol>Email Address</MDBCol>
+                            <MDBCol>Contact</MDBCol>
+                        </MDBRow>
                         {this.props.participants.map((participant) => {
                             return (
                                 <MDBRow key={participant._id}>
@@ -39,8 +44,7 @@ class ParticipantsModal extends Component {
                             );
                         })}
                     </MDBModalBody>
-                    <MDBModalFooter>
-                    </MDBModalFooter>
+                    <MDBModalFooter></MDBModalFooter>
                 </MDBModal>
             </React.Fragment>
         );

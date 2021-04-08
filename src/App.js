@@ -20,6 +20,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import UserEvents from "./pages/UserEvents.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
+import UserProfileEdit from "./pages/UserProfileEdit.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 import Header from "./components/Header.jsx";
@@ -38,6 +39,7 @@ class App extends Component {
 		};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
+		this.updateHeader = this.updateHeader.bind(this);
 	}
 
 	// Check if user is login when page load
@@ -77,6 +79,10 @@ class App extends Component {
 	handleLogin(token, user) {
 		localStorage.setItem("token", token);
 		this.setState({ isAuthenticated: true, token: token, user: user });
+	}
+
+	updateHeader(username) {
+		this.setState({user: {...this.state.user, username: username}})
 	}
 
 	render() {
@@ -139,6 +145,14 @@ class App extends Component {
 								isAuthenticated={this.state.isAuthenticated}
 								handleLogout={this.handleLogout}
 								component={Event} user={this.state.user}
+							/>
+
+							<ProtectedRoute
+								exact
+								path="/profile/edit"
+								isAuthenticated={this.state.isAuthenticated}
+								handleLogout={this.handleLogout} updateHeader={this.updateHeader}
+								component={UserProfileEdit}
 							/>
 							<ProtectedRoute
 								exact
