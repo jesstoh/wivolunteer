@@ -10,6 +10,7 @@ class FeedbackStats extends Component {
 			qn1: null,
 			qn2: null,
 			qn3: null,
+			feedbacksQty: 0,
 		};
 	}
 	componentDidMount() {
@@ -19,26 +20,28 @@ class FeedbackStats extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				if (!response.data.length) {
+				if (response.data.length) {
 					// PROCESS DATA INTO ARRAY///
 					// create array of 0 value corresponding to number of options in each question
 					const qn1 = new Array(3).fill(0);
 					const qn2 = new Array(5).fill(0);
 					const qn3 = new Array(5).fill(0);
 					response.data.forEach((feedback) => {
-						// For question, will change schema to Number and corresponding to string, to make it easier to process
-						if (feedback.hasEnoughResources === "Not enough") {
-							qn1[0]++;
-						} else if (feedback.hasEnoughResources === "Just nice") {
-							qn1[1]++;
-						} else {
-							qn1[2]++;
-						}
+						qn1[feedback.hasEnoughResources - 1]++; // Adding count to each question array
 						qn2[feedback.isWellOrganised - 1]++; // Adding count to each question array
 						qn3[feedback.isSatisfied - 1]++;
 					});
-					this.setState({ qn1: qn1, qn2: qn2, qn3: qn3 });
-					// console.log(qn1, qn2, qn3);
+					this.setState(
+						{
+							qn1: qn1,
+							qn2: qn2,
+							qn3: qn3,
+							feedbacksQty: response.data.length,
+						},
+						() => {
+							console.log(this.state);
+						}
+					);
 				}
 			});
 	}
@@ -91,7 +94,7 @@ class FeedbackStats extends Component {
 			labels: ["1", "2", "3", "4", "5"],
 			datasets: [
 				{
-					label: ["1", "2", "3", "4", "5"],
+					label: "Event Organization Score",
 					backgroundColor: chartColors.barColors,
 					hoverBackgroundColor: chartColors.hoverBarColors,
 					data: this.state.qn2,
@@ -103,7 +106,7 @@ class FeedbackStats extends Component {
 			labels: ["1", "2", "3", "4", "5"],
 			datasets: [
 				{
-					label: ["1", "2", "3", "4", "5"],
+					label: "Participant Satisfaction Score",
 					backgroundColor: chartColors.barColors,
 					hoverBackgroundColor: chartColors.hoverBarColors,
 					data: this.state.qn3,
@@ -112,6 +115,16 @@ class FeedbackStats extends Component {
 		};
 		return (
 			<MDBContainer>
+				<p>
+					{this.props.participantsQty}/{this.props.limit}, ie.{" "}
+					{Math.round((this.props.participantsQty / this.props.limit) * 100)}%
+					have participated in the event{" "}
+				</p>
+				<p>
+					{this.state.feedbacksQty}/{this.props.limit}, ie.{" "}
+					{Math.round((this.state.feedbacksQty / this.props.limit) * 100)}% of
+					participants have submitted feedbacks
+				</p>
 				<h5>Event statistics</h5>
 				<p>Did you allocated sufficient resources for your event?</p>
 				<Pie data={resourcesFeedback} />
@@ -132,11 +145,6 @@ class FeedbackStats extends Component {
 					options={chartOptions}
 				/>
 				<br />
-				<h5>Additional Information</h5>
-				<ul>
-					<li>{"data here"} have submitted feedback for your event.</li>
-					<li>{"data here"} have participated in your event.</li>
-				</ul>
 			</MDBContainer>
 		);
 	}
