@@ -64,9 +64,10 @@ class EventFeedback extends Component {
 					</p>
 					<MDBFormInline>
 						<MDBInput
+							gap
 							onClick={this.onClick(1)}
 							checked={this.state.qn1 === 1 ? true : false}
-							label="More than enough."
+							label="Not enough."
 							type="radio"
 							id="qn1"
 							containerClass="mr-5"
@@ -75,16 +76,15 @@ class EventFeedback extends Component {
 							gap
 							onClick={this.onClick(2)}
 							checked={this.state.qn1 === 2 ? true : false}
-							label="Not enough."
+							label="Just nice."
 							type="radio"
 							id="qn1"
 							containerClass="mr-5"
 						/>
 						<MDBInput
-							gap
 							onClick={this.onClick(3)}
 							checked={this.state.qn1 === 3 ? true : false}
-							label="Just nice."
+							label="More than enough."
 							type="radio"
 							id="qn1"
 							containerClass="mr-5"
