@@ -101,7 +101,7 @@ class Event extends Component {
                                 new Date(this.state.event.dateTime) >
                                     new Date() ? null : (
                                     <FeedbackStats
-                                        eventId={this.state.event._id}
+                                        eventId={this.state.event._id} participantsQty={this.state.event.participants.length} limit={this.state.event.limit}
                                     />
                                 )}
                             </MDBRow>
