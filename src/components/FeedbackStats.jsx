@@ -51,16 +51,37 @@ class FeedbackStats extends Component {
 
     render() {
         const chartOptions = {
+            legend: {display: false},
             scales: {
                 yAxes: [
                     {
+                        scaleLabel: {
+                            display: true,
+                            labelString: "No. of response",
+                        },
                         ticks: {
                             beginAtZero: true,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            },
+                        },
+                    },
+                ],
+                xAxes: [
+                    {   scaleLabel: {
+                        display: true,
+                        labelString: "Score (1 - 5)",
+                    },
+                        gridLines: {
+                            display: false,
                         },
                     },
                 ],
             },
         };
+
         const chartColors = {
             // pie chart colors
             pieColors: ["#BA274A", "#3ED388", "#2191FB"],
@@ -89,6 +110,7 @@ class FeedbackStats extends Component {
                     data: this.state.qn1,
                     backgroundColor: chartColors.pieColors, //green //blue //red
                     hoverBackgroundColor: chartColors.hoverPieColors, //green //blue //red
+                    xAxisID: "",
                 },
             ],
         };
@@ -164,7 +186,7 @@ class FeedbackStats extends Component {
                                 <p className="font-italic ">
                                     Is there sufficient resources for the event?
                                 </p>
-                                <Pie data={resourcesFeedback} />
+                                <Pie data={resourcesFeedback}/>
                             </MDBCol>
                             <MDBCol md="6">
                                 <MDBRow>

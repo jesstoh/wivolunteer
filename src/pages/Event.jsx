@@ -7,7 +7,6 @@ import {
     MDBCardBody,
     MDBCardImage,
     MDBCardTitle,
-    MDBCardText,
     MDBCol,
     MDBRow,
 } from "mdbreact";
@@ -52,7 +51,7 @@ class Event extends Component {
     render() {
         return !this.state.event ? null : (
             <MDBContainer className="pt-5">
-                <MDBCol md="9" className="offset-md-1">
+                <MDBCol md="10" className="offset-md-1">
                     <MDBCard>
                         <MDBCardImage
                             className="img-fluid"
