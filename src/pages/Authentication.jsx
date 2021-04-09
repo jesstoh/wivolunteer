@@ -5,8 +5,7 @@ import {
     MDBCarouselInner,
     MDBCarouselItem,
     MDBView,
-    MDBMask,
-    MDBContainer,
+    MDBMask
 } from "mdbreact";
 
 import landingImage1 from "../images/landing_page_1.jpg";

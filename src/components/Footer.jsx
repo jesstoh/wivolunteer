@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
+import { MDBContainer, MDBFooter } from "mdbreact";
 
 class Footer extends Component {
     render() {

@@ -4,10 +4,8 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	Redirect,
 } from "react-router-dom";
-import { MDBBtn } from "mdbreact";
 import axios from "axios";
 
 import Authentication from "./pages/Authentication.jsx";
