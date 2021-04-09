@@ -4,16 +4,14 @@ import {
 	MDBRow,
 	MDBCol,
 	MDBCard,
-	MDBCardTitle,
 	MDBCardBody,
-	MDBBCardText,
 	MDBBadge,
 	MDBBtn,
 	MDBIcon,
 } from "mdbreact";
 import { Link } from "react-router-dom";
-import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
+
 class UserProfile extends Component {
 	constructor(props) {
 		super(props);
@@ -56,7 +54,7 @@ class UserProfile extends Component {
 								src={this.state.userProfile.image}
 								style={{ height: "150px", width: "150px", objectFit: "cover" }}
 								className="rounded-circle img-thumbnail mx-auto d-block m-3"
-								alt="profile image"
+								alt="profile"
 							/>
 						</MDBCol>
 					</MDBRow>

@@ -153,7 +153,7 @@ class UserProfileEdit extends Component {
 								objectFit: "cover",
 							}}
 							className="rounded-circle img-thumbnail mx-auto d-block m-3"
-							alt="profile image"
+							alt="profile"
 						/>
 						<div className="text-center mt-4">
 							<MDBBtn color="blue" type="submit">

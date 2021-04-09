@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MDBContainer, MDBBtn, MDBCol, MDBRow } from "mdbreact";
 import EventsContainer from "../components/EventsContainer.jsx";
 import axios from "axios";
-import userEvent from "@testing-library/user-event";
+
 class UserEvents extends Component {
 	constructor(props) {
 		super(props);
