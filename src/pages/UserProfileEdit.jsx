@@ -95,7 +95,7 @@ class UserProfileEdit extends Component {
 							type="text"
 							className="form-control"
 							id="username"
-							value={this.state.userProfile.username}
+							value={this.state.userProfile.username || ""}
 							onChange={this.handleChange}
 						/>
 
@@ -109,7 +109,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="contact"
-									value={this.state.userProfile.contact}
+									value={this.state.userProfile.contact || ""}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -121,7 +121,7 @@ class UserProfileEdit extends Component {
 									type="text"
 									className="form-control"
 									id="address"
-									value={this.state.userProfile.address}
+									value={this.state.userProfile.address || ""}
 									onChange={this.handleChange}
 								/>
 							</MDBCol>
@@ -144,7 +144,7 @@ class UserProfileEdit extends Component {
 
 						<label className="grey-text">Image Preview:</label>
 						<img
-							src={this.state.userProfile.image}
+							src={this.state.userProfile.image || ""}
 							style={{
 								height: "150px",
 								width: "150px",
