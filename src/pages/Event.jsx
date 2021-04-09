@@ -7,7 +7,6 @@ import {
     MDBCardBody,
     MDBCardImage,
     MDBCardTitle,
-    MDBCardText,
     MDBCol,
     MDBRow,
 } from "mdbreact";
@@ -58,7 +57,7 @@ class Event extends Component {
             </div>
         ) : (
             <MDBContainer className="pt-5">
-                <MDBCol md="9" className="offset-md-1">
+                <MDBCol md="10" className="offset-md-1">
                     <MDBCard>
                         <MDBCardImage
                             className="img-fluid"
@@ -128,7 +127,7 @@ class Event extends Component {
                                 new Date(this.state.event.dateTime) >
                                     new Date() ? null : (
                                     <FeedbackStats
-                                        eventId={this.state.event._id}
+                                        eventId={this.state.event._id} participantsQty={this.state.event.participants.length} limit={this.state.event.limit}
                                     />
                                 )}
                             </MDBRow>
