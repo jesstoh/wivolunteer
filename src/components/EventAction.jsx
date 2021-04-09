@@ -152,7 +152,7 @@ class EventAction extends Component {
                                 Cancel Event
                             </MDBBtn>
                         )}
-                        <Link to={"/event/" + "edit/" + this.props.event._id}>
+                        <Link to={"/event/edit/" + this.props.event._id}>
                             <MDBBtn outline color="warning">
                                 Edit Event
                             </MDBBtn>

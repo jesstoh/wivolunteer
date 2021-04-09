@@ -6,8 +6,7 @@ import {
     MDBNavbarToggler,
     MDBCollapse,
     MDBNavItem,
-    MDBNavLink,
-    MDBIcon,
+    MDBNavLink
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 

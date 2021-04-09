@@ -6,7 +6,7 @@ class PublicRoute extends Component {
     render() {
         const {
             component: Component,
-            isAuthenticated: isAuthenticated,
+            isAuthenticated,
             ...rest
         } = this.props;
         return (

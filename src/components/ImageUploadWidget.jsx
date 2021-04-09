@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBContainer, MDBBtn } from "mdbreact";
+import { MDBBtn } from "mdbreact";
 
 class ImageUploadWidget extends Component {
 	constructor(props) {
