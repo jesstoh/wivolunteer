@@ -2,10 +2,6 @@
 ## About App
 WiVolunteer App is a web application that enable user to join and organise volunteering events. It aims to improve resource allocation, quality of events and volunteers' experience with analysis of feedbacks from participants.
 
-## Collaborator
-This project is a collaborative effort.
-- [Jess Toh](https://github.com/jesstoh)
-- [Tee Wenjie](https://github.com/wenjietee)
 
 ## Application Links
 
@@ -48,3 +44,4 @@ Libraries
 - **react-select** is React select control component used for multiple selection of inputs. This is used for selection in search bar in this project. 
 - **react-moment** is React component for the moment date library, used to format dates of event to be more human readable 
 - **axios** is promised based HTTP client used to make requests to backend api
+
