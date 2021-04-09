@@ -122,7 +122,9 @@ class FeedbackStats extends Component {
                     Event Statistics
                 </h4>
                 <MDBContainer className="my-5">
-                    <h5 className="text-black-50 font-weight-bold">Basic Info</h5>
+                    <h5 className="text-black-50 font-weight-bold">
+                        Basic Info
+                    </h5>
                     {/* <MDBCol> */}
                     <span>
                         {this.props.participantsQty}/{this.props.limit}, ie.{" "}
@@ -140,52 +142,60 @@ class FeedbackStats extends Component {
                             (this.state.feedbacksQty /
                                 this.props.participantsQty) *
                                 100
-                        )}
+                        ) || 0}
                         % of participants have submitted feedbacks
                     </span>
                     <br />
                 </MDBContainer>
-
-                <MDBContainer className="pt-2">
-                    <h5 className="text-black-50 font-weight-bold">
-                        Participant Feedbacks
-                    </h5>
-                    <MDBRow>
-                        <MDBCol md="6" className="pb-4 pt-2">
-                            <p className="font-italic ">
-                                Is there sufficient resources for the event?
-                            </p>
-                            <Pie data={resourcesFeedback} />
-                        </MDBCol>
-                        <MDBCol md="6">
-                            <MDBRow>
-                                <MDBCol size="12" className="p-2">
-                                    <p className="font-italic ">
-                                        How well organized is the event?
-                                    </p>
-                                    <Bar
-                                        data={isOrganized}
-                                        width={100}
-                                        height={50}
-                                        options={chartOptions}
-                                    />
-                                </MDBCol>
-                                <MDBCol size="12" className="p-4">
-                                    <p className="font-italic">
-                                        How satisfied are participants after the
-                                        event?
-                                    </p>
-                                    <Bar
-                                        data={isSatisfied}
-                                        width={100}
-                                        height={50}
-                                        options={chartOptions}
-                                    />
-                                </MDBCol>
-                            </MDBRow>
-                        </MDBCol>
-                    </MDBRow>
-                </MDBContainer>
+                {!this.state.feedbacksQty ? (
+                    <MDBContainer className="py-2">
+                        <h5 className="text-black-50 font-weight-bold">
+                            Participant Feedbacks
+                        </h5>{" "}
+                        <p>No participants feedback statistics available</p>
+                    </MDBContainer>
+                ) : (
+                    <MDBContainer className="py-2">
+                        <h5 className="text-black-50 font-weight-bold">
+                            Participant Feedbacks
+                        </h5>
+                        <MDBRow>
+                            <MDBCol md="6" className="pb-4 pt-2">
+                                <p className="font-italic ">
+                                    Is there sufficient resources for the event?
+                                </p>
+                                <Pie data={resourcesFeedback} />
+                            </MDBCol>
+                            <MDBCol md="6">
+                                <MDBRow>
+                                    <MDBCol size="12" className="p-2">
+                                        <p className="font-italic ">
+                                            How well organized is the event?
+                                        </p>
+                                        <Bar
+                                            data={isOrganized}
+                                            width={100}
+                                            height={50}
+                                            options={chartOptions}
+                                        />
+                                    </MDBCol>
+                                    <MDBCol size="12" className="p-4">
+                                        <p className="font-italic">
+                                            How satisfied are participants after
+                                            the event?
+                                        </p>
+                                        <Bar
+                                            data={isSatisfied}
+                                            width={100}
+                                            height={50}
+                                            options={chartOptions}
+                                        />
+                                    </MDBCol>
+                                </MDBRow>
+                            </MDBCol>
+                        </MDBRow>
+                    </MDBContainer>
+                )}
             </MDBContainer>
         );
     }
