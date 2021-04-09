@@ -70,7 +70,9 @@ class UserProfileEdit extends Component {
 				headers: { authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				this.setState({ isFormSubmitted: true });
+				this.props.updateHeader(response.data.username);
+				this.setState({ isFormSubmitted: true }
+				);
 			})
 			.catch((err) => {
 				alert(err);
